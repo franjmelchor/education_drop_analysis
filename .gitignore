@@ -1,2 +1,6 @@
 
 .idea/
+
+Code/data_acquisition_and_understanding/__pycache__/
+
+Code/data_acquisition_and_understanding/etl/.ipynb_checkpoints/
