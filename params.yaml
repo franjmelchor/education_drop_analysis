@@ -1,0 +1,145 @@
+wdir:
+  fetch_data: "/Code/Ensemble/Data_Acquisition_and_Understanding/Fetch_Data/"
+  etl:
+    scolarship_per_year_&_plan_subj_call: "/Code/Ensemble/Data_Acquisition_and_Understanding/ETL/etl_scolarship_per_year_and_plan_subj_call/"
+    record_personal_access: "/Code/Ensemble/Data_Acquisition_and_Understanding/ETL/etl_record_personal_access/"
+  feat_eng:
+    personal_access_script: "/Code/Ensemble/Analysis_and_Modeling/Feature_Engineering/"
+    quadrimesters_script: "/Code/Ensemble/Analysis_and_Modeling/Feature_Engineering/"
+  feat_sel: "/Code/Ensemble/Analysis_and_Modeling/Feature_Selection/"
+  analys: "/Code/Ensemble/Analysis_and_Modeling/Analysis/"
+scripts:
+  fetch_data: "/Code/Ensemble/Data_Acquisition_and_Understanding/Fetch_Data/fetch_data.py"
+  etl:
+    scolarship_per_year_&_plan_subj_call: "/Code/Ensemble/Data_Acquisition_and_Understanding/ETL/etl_scolarship_per_year_and_plan_subj_call/etl_scolarship_per_year_and_plan_subj_call.py"
+    record_personal_access: "/Code/Ensemble/Data_Acquisition_and_Understanding/ETL/etl_record_personal_access/etl_record_personal_access.py"
+  feat_eng:
+    personal_access_script: "/Code/Ensemble/Analysis_and_Modeling/Feature_Engineering/personal_access_feat_eng.py"
+    quadrimesters_script: "/Code/Ensemble/Analysis_and_Modeling/Feature_Engineering/quadrimesters_feat_eng.py"
+  feat_sel: "/Code/Ensemble/Analysis_and_Modeling/Feature_Selection/feat_sel.py"
+  analys: "/Code/Ensemble/Analysis_and_Modeling/Analysis/ensemble_model.py"
+school_kind:
+  pol: "Polytechnic"
+  teach: "Teaching"
+model:
+  1: "1st_model"
+  2: "2nd_model"
+  3: "3rd_model"
+  4: "4th_model"
+  5: "5th_model"
+  6: "6th_model"
+  7: "7th_model"
+  8: "8th_model"
+data:
+    raw_data:
+      pol:
+        plan_subj_call: "/Data/Raw/Politecnica -plan asignatura convocatoria.xls"
+        scholarship: "/Data/Raw/Politecnica -becario por curso academico.xls"
+        personal_access: "/Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls"
+      teach:
+        plan_subj_call: "/Data/Raw/Profesorado -plan asignatura convocatoria.xls"
+        scholarship: "/Data/Raw/Profesorado -becario por curso academico.xls"
+        personal_access: "/Data/Raw/Profesorado -datos de expediente,personales y de acceso.xls"
+    interim_data:
+      pol:
+        plan_subj_call: "/Data/Ensemble/Interim/Polytechnic/polytechnic_plan_subject_call.csv"
+        scholarship: "/Data/Ensemble/Interim/Polytechnic/polytechnic_scholarship_per_year.csv"
+        personal_access: "/Data/Ensemble/Interim/Polytechnic/polytechnic_record_personal_access.csv"
+      teach:
+        plan_subj_call: "/Data/Ensemble/Interim/Teaching/teaching_plan_subject_call.csv"
+        scholarship: "/Data/Ensemble/Interim/Teaching/teaching_scholarship_per_year.csv"
+        personal_access: "/Data/Ensemble/Interim/Teaching/teaching_record_personal_access.csv"
+    processed_data:
+       pol:
+         plan_subj_call: "/Data/Ensemble/Processed/Polytechnic/Plan_Subject_Call/pr_polytechnic_plan_subject_call.csv"
+         scholarship: "/Data/Ensemble/Processed/Polytechnic/Scolarship_per_year/pr_polytechnic_scholarship_per_year.csv"
+         personal_access: "/Data/Ensemble/Processed/Polytechnic/Record_Personal_Access/pr_polytechnic_record_personal_access.csv"
+       teach:
+         plan_subj_call: "/Data/Ensemble/Processed/Teaching/Plan_Subject_Call/pr_teaching_plan_subject_call.csv"
+         scholarship: "/Data/Ensemble/Processed/Teaching/Scolarship_per_year/pr_teaching_scholarship_per_year.csv"
+         personal_access: "/Data/Ensemble/Processed/Teaching/Record_personal_access/pr_teaching_record_personal_access.csv"
+    analys_data:
+     personal_access_data:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/analys_teaching_record_personal_access.csv"
+     1st_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/analys_teaching_record_personal_access.csv"
+     2nd_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/analys_teaching_record_personal_access.csv"
+     3rd_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/analys_teaching_record_personal_access.csv"
+     4th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/analys_teaching_record_personal_access.csv"
+     5th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/analys_teaching_record_personal_access.csv"
+     6th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/analys_teaching_record_personal_access.csv"
+     7th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/analys_teaching_record_personal_access.csv"
+     8th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/analys_teaching_record_personal_access.csv"
+    final_analys_data:
+     personal_access_data:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/final_analys_teaching_record_personal_access.csv"
+     1st_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/final_analys_teaching_record_personal_access.csv"
+     2nd_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/final_analys_teaching_record_personal_access.csv"
+     3rd_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/final_analys_teaching_record_personal_access.csv"
+     4th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/final_analys_teaching_record_personal_access.csv"
+     5th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/final_analys_teaching_record_personal_access.csv"
+     6th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/final_analys_teaching_record_personal_access.csv"
+     7th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/final_analys_teaching_record_personal_access.csv"
+     8th_quad:
+       pol: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/final_analys_polytechnic_record_personal_access.csv"
+       teach: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/final_analys_teaching_record_personal_access.csv"
+    pred_analys_data:
+      personal_access_data:
+        pol: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/pred_analys_polytechnic_record_personal_access.csv"
+        teach: "/Data/Ensemble/For_Analysis_and_Modeling/personal_access_data/pred_analys_teaching_record_personal_access.csv"
+      1st_quad:
+         pol: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+         teach: "/Data/Ensemble/For_Analysis_and_Modeling/1st_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      2nd_quad:
+         pol: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+         teach: "/Data/Ensemble/For_Analysis_and_Modeling/2nd_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      3rd_quad:
+          pol: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+          teach: "/Data/Ensemble/For_Analysis_and_Modeling/3rd_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      4th_quad:
+          pol: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+          teach: "/Data/Ensemble/For_Analysis_and_Modeling/4th_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      5th_quad:
+          pol: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+          teach: "/Data/Ensemble/For_Analysis_and_Modeling/5th_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      6th_quad:
+          pol: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+          teach: "/Data/Ensemble/For_Analysis_and_Modeling/6th_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      7th_quad:
+          pol: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+          teach: "/Data/Ensemble/For_Analysis_and_Modeling/7th_quadrimester/pred_analys_teaching_record_personal_access.csv"
+      8th_quad:
+           pol: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/pred_analys_polytechnic_record_personal_access.csv"
+           teach: "/Data/Ensemble/For_Analysis_and_Modeling/8th_quadrimester/pred_analys_teaching_record_personal_access.csv"
+

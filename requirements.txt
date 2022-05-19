@@ -1,0 +1,14 @@
+pandas==1.2.4
+argparse==1.4.0
+numpy==1.21.2
+scikit-learn==1.0
+plotly==5.3.1
+dvc==2.7.4
+swifter==1.0.7
+xlrd == 1.2.0
+git+https://github.com/i3uex/apitep_utils.git@feature/classes
+pydrive2[fsspec]>=1.9.4
+swifter==1.0.7
+pandas-profiling==2.9.0
+imblearn==0.0
+imbalanced-learn==0.7.0
