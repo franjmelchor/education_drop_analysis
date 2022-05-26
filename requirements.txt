@@ -12,4 +12,3 @@ swifter==1.0.7
 pandas-profiling==2.9.0
 imblearn==0.0
 imbalanced-learn==0.7.0
-xgboost==1.4.2
