@@ -9,4 +9,5 @@ Code/__pycache__/
 *.csv
 *.xls
 *.sav
-
+*.log
+*.csv

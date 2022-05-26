@@ -4,8 +4,7 @@ from apitep_utils.feature_engineering import FeatureEngineering
 import logging
 import pandas as pd
 import keys
-from data_model.school_kind import SchoolKind
-
+import numpy as np
 log = logging.getLogger(__name__)
 
 pr_plan_subject_call: pd.DataFrame
@@ -119,7 +118,6 @@ def get_cum_more_1st_call_ratio(p: pd.Series, course: int, quadrimester: int):
 class QuadrimestersFeatureEngineering(FeatureEngineering):
     quadrimester: int = None
     course: int = None
-    school_kind: SchoolKind = None
 
     def parse_arguments(self):
         """
@@ -142,8 +140,6 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
                                      help="path to the input CSV datasets")
         argument_parser.add_argument("-o", "--output_path", required=True,
                                      help="path to the output CSV dataset")
-        argument_parser.add_argument("-s", "--school_kind", required=True,
-                                     help="school kind to analyze")
         argument_parser.add_argument("-c", "--course", required=True,
                                      help="course to analyze")
         argument_parser.add_argument("-q", "--quadrimester", required=True,
@@ -162,11 +158,6 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
             check_is_file=False)
         self.course = int(arguments.course)
         self.quadrimester = int(arguments.quadrimester)
-        school_kind_str = arguments.school_kind
-        if school_kind_str == "Teaching":
-            self.school_kind = SchoolKind.Teaching
-        elif school_kind_str == "Polytechnic":
-            self.school_kind = SchoolKind.Polytechnic
 
     @FeatureEngineering.stopwatch
     def process(self):
@@ -174,7 +165,7 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
         Feature Engineering of pred_analys_record_personal_access
         """
 
-        log.info("Feature Engineering of pred_analys_record_personal_access data of school: " + self.school_kind.value)
+        log.info("Feature Engineering of pred_analys_record_personal_access data ")
         log.debug("QuadrimestersFeatureEngineering.process()")
 
         global pr_plan_subject_call, pr_scholarship_per_year
@@ -189,6 +180,7 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
         analys_record_personal_access[keys.CUM_PASS_RATIO_KEY] = analys_record_personal_access.apply(
             lambda func: get_cum_pass_ratio(func, course=self.course, quadrimester=self.quadrimester), axis=1
         )
+
         analys_record_personal_access[keys.SCHOLARSHIP_KEY] = analys_record_personal_access.apply(
             lambda func: get_scholarship(func, course=self.course), axis=1
         )

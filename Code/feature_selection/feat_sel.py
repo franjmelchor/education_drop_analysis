@@ -4,7 +4,6 @@ import logging
 from apitep_utils.data_processor import DataProcessor
 
 import keys
-from data_model.school_kind import SchoolKind
 
 log = logging.getLogger(__name__)
 
@@ -12,7 +11,6 @@ log = logging.getLogger(__name__)
 class QuadrimestersFeatureSelection(DataProcessor):
     quadrimester: int = None
     course: int = None
-    school_kind: SchoolKind = None
 
     def parse_arguments(self):
         """
@@ -32,8 +30,6 @@ class QuadrimestersFeatureSelection(DataProcessor):
                                      help="path to the input CSV dataset")
         argument_parser.add_argument("-o", "--output_path", required=True,
                                      help="path to the output CSV dataset")
-        argument_parser.add_argument("-s", "--school_kind", required=True,
-                                     help="school kind to analyze")
         argument_parser.add_argument("-c", "--course", required=True,
                                      help="course to analyze")
         argument_parser.add_argument("-q", "--quadrimester", required=True,
@@ -47,20 +43,14 @@ class QuadrimestersFeatureSelection(DataProcessor):
             check_is_file=False)
         self.course = int(arguments.course)
         self.quadrimester = int(arguments.quadrimester)
-        school_kind_str = arguments.school_kind
-        if school_kind_str == "Teaching":
-            self.school_kind = SchoolKind.Teaching
-        elif school_kind_str == "Polytechnic":
-            self.school_kind = SchoolKind.Polytechnic
-
     def process(self):
         """
         Feature selection of analys_record_personal_access
         """
         if self.course == 0:
-            log.info("Feature Selection of analys_record_personal_access data of school: " + self.school_kind.value)
+            log.info("Feature Selection of analys_record_personal_access data")
         else:
-            log.info("Feature Selection of analys_record_personal_access data of school: " + self.school_kind.value +
+            log.info("Feature Selection of analys_record_personal_access data" +
                      " with data of course " + str(self.course) + " and quadrimester " + str(self.quadrimester))
 
         log.debug("QuadrimestersFeatureSelection.process()")
@@ -73,11 +63,11 @@ class QuadrimestersFeatureSelection(DataProcessor):
             categorical_cols = dv_analys_record_personal_access.drop([keys.FINAL_ADMISION_NOTE_KEY], axis=1).columns
         elif self.course == 1:
             categorical_cols = dv_analys_record_personal_access.drop(
-                [keys.FINAL_ADMISION_NOTE_KEY, keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY],
+                [keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY],
                 axis=1).columns
         else:
             categorical_cols = dv_analys_record_personal_access.drop(
-                [keys.FINAL_ADMISION_NOTE_KEY, keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY,
+                [keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY,
                  keys.CUM_MORE_1ST_CALL_RATIO_KEY],
                 axis=1).columns
 

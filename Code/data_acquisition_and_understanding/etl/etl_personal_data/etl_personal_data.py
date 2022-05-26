@@ -1,7 +1,6 @@
 import logging
 from apitep_utils import ETL
 import keys
-from data_model.school_kind import SchoolKind
 import pandas as pd
 from apitep_utils import ArgumentParserHelper
 import argparse
@@ -24,7 +23,6 @@ def delete_people_without_all_information(p):
 
 
 class RecordPersonalAccessETL(ETL):
-    school_kind: SchoolKind = None
 
     def parse_arguments(self):
         """
@@ -47,9 +45,6 @@ class RecordPersonalAccessETL(ETL):
                                      help="path to the input CSV datasets")
         argument_parser.add_argument("-o", "--output_path", required=True,
                                      help="path to the output CSV dataset")
-        argument_parser.add_argument("-s", "--school_kind", required=True,
-                                     help="school kind to analyze")
-
         arguments = argument_parser.parse_args()
         input_path_segments = arguments.input_paths
         self.input_path_segments = []
@@ -61,11 +56,7 @@ class RecordPersonalAccessETL(ETL):
         self.output_path_segment = ArgumentParserHelper.parse_data_file_path(
             data_file_path=arguments.output_path,
             check_is_file=False)
-        school_kind_str = arguments.school_kind
-        if school_kind_str == "Teaching":
-            self.school_kind = SchoolKind.Teaching
-        elif school_kind_str == "Polytechnic":
-            self.school_kind = SchoolKind.Polytechnic
+
 
     @ETL.stopwatch
     def process(self):

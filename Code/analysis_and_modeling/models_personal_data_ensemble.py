@@ -1,22 +1,24 @@
 import argparse
-from pathlib import Path
 
 from apitep_utils import ArgumentParserHelper
 from apitep_utils.analysis_modelling import AnalysisModeling
 import logging
 import numpy as np
 import keys
-from data_model.school_kind import SchoolKind
 import pandas as pd
 from sklearn.model_selection import train_test_split, cross_val_score
 import sklearn.metrics as sklm
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.svm import SVC
-from sklearn.inspection import permutation_importance
-import plotly.express as px
-import plotly as py
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import recall_score
+from sklearn.metrics import make_scorer
 
 log = logging.getLogger(__name__)
 
@@ -24,7 +26,6 @@ log = logging.getLogger(__name__)
 class QuadrimestersEnsemble(AnalysisModeling):
     quadrimester: int = None
     course: int = None
-    school_kind: SchoolKind = None
     final_analys_record_personal_access: pd.DataFrame = None
     model_number: str = None
     x_train: pd.DataFrame = None
@@ -42,7 +43,7 @@ class QuadrimestersEnsemble(AnalysisModeling):
         gs_RndForest = GridSearchCV(
             RandomForestClassifier(random_state=123),
             grid_params,
-            scoring='accuracy',
+            scoring='recall',
             n_jobs=-1,
             cv=4
         )
@@ -63,24 +64,22 @@ class QuadrimestersEnsemble(AnalysisModeling):
         gs_SVM.fit(self.x_train_norm, self.y_train)
         return gs_SVM.best_estimator_
 
-    @staticmethod
-    def print_cv_results(cv_estimate):
-        res = '\n Mean performance metric = %4.3f' % np.mean(cv_estimate) + '\n'
-        res = res + ' SDT of the metric       = %4.3f' % np.std(cv_estimate) + '\n'
-        res = res + ' Outcomes by cv fold' + '\n'
-        for i, x in enumerate(cv_estimate):
-            res = res + ' Fold %2d    %4.3f' % (i + 1, x) + '\n'
-        return res
-
-    @staticmethod
-    def get_type_correlation(independent_feature: pd.Series, target_feature: pd.Series, positive_correlation: list,
-                             negative_correlation: list):
-        from scipy import stats
-        corr = stats.spearmanr(independent_feature, target_feature).correlation
-        if corr > 0:
-            positive_correlation.append(independent_feature.name)
-        if corr < 0:
-            negative_correlation.append(independent_feature.name)
+    def get_best_hyperparameters_MLP(self):
+        grid_params = {
+            'activation': ['tanh', 'relu'],
+            'solver': ['sgd', 'adam'],
+            'alpha': [0.0001, 0.05],
+            'learning_rate': ['constant', 'adaptive']
+        }
+        gs_MLP = GridSearchCV(
+            MLPClassifier(random_state=123, max_iter=1000),
+            grid_params,
+            scoring='accuracy',
+            n_jobs=-1,
+            cv=4
+        )
+        gs_MLP.fit(self.x_train, self.y_train)
+        return gs_MLP.best_estimator_
 
     def parse_arguments(self):
         """
@@ -100,8 +99,6 @@ class QuadrimestersEnsemble(AnalysisModeling):
                                      help="path to the input CSV dataset")
         argument_parser.add_argument("-o", "--output_path", required=True,
                                      help="path to the output CSV dataset")
-        argument_parser.add_argument("-s", "--school_kind", required=True,
-                                     help="school kind to analyze")
         argument_parser.add_argument("-c", "--course", required=True,
                                      help="course to analyze")
         argument_parser.add_argument("-q", "--quadrimester", required=True,
@@ -118,28 +115,27 @@ class QuadrimestersEnsemble(AnalysisModeling):
         self.course = int(arguments.course)
         self.quadrimester = int(arguments.quadrimester)
         self.model_number = arguments.model_number
-        school_kind_str = arguments.school_kind
-        if school_kind_str == "Teaching":
-            self.school_kind = SchoolKind.Teaching
-        elif school_kind_str == "Polytechnic":
-            self.school_kind = SchoolKind.Polytechnic
 
     def process(self):
         """
         Analysis of final_analys_record_personal_access
         """
         if self.course == 0:
-            log.info("Analysis of analys_record_personal_access data of school: " + self.school_kind.value)
+            log.info("Analysis of analys_record_personal_access data")
         else:
-            log.info("Analysis of analys_record_personal_access data of school: " + self.school_kind.value +
+            log.info("Analysis of analys_record_personal_access data"
                      " with data of course " + str(self.course) + " and quadrimester " + str(self.quadrimester))
 
         log.debug("QuadrimestersEnsemble.process()")
 
+        note_bcket_array = np.array([5, 6.5, 8, 9.5, 10, 11.5, 13, 14])
+        self.input_df[keys.FINAL_ADMISION_NOTE_INTERVAL_KEY] = pd.cut(
+            self.input_df[keys.FINAL_ADMISION_NOTE_KEY], note_bcket_array, include_lowest=True)
+        self.input_df.drop([keys.FINAL_ADMISION_NOTE_KEY], axis=1, inplace=True)
+
         if keys.CUM_MEDIAN_KEY in self.input_df.columns:
-            median_bcket_array = np.array([0, 1.5, 3, 4.5, 6, 7.5, 9, 10])
             self.input_df[keys.CUM_MEDIAN_INTERVAL_KEY] = pd.cut(
-                self.input_df[keys.CUM_MEDIAN_KEY], median_bcket_array, include_lowest=True)
+                self.input_df[keys.CUM_MEDIAN_KEY], note_bcket_array, include_lowest=True)
             self.input_df.drop([keys.CUM_MEDIAN_KEY], axis=1, inplace=True)
 
         self.final_analys_record_personal_access = self.input_df.copy()
@@ -196,42 +192,67 @@ class QuadrimestersEnsemble(AnalysisModeling):
         self.x_train_norm = norm.transform(self.x_train)
         self.x_test_norm = norm.transform(self.x_test)
 
-        self.models_developed.append(GradientBoostingClassifier(random_state=123).fit(self.x_train, self.y_train))
-        best_hyperparameters_RF = self.get_best_hyperparameters_RandomForest()
+        best_hyperparameters_MLP = self.get_best_hyperparameters_MLP()
+        self.models_developed.append(MLPClassifier(
+            activation=best_hyperparameters_MLP.activation,
+            solver=best_hyperparameters_MLP.solver,
+            alpha=best_hyperparameters_MLP.alpha,
+            learning_rate=best_hyperparameters_MLP.learning_rate, random_state=123, max_iter=1000).fit(
+            self.x_train, self.y_train))
+
+        best_hyperparameters_RForest = self.get_best_hyperparameters_RandomForest()
         self.models_developed.append(RandomForestClassifier(
-            max_depth=best_hyperparameters_RF.max_depth,
-            n_estimators=best_hyperparameters_RF.n_estimators,
+            max_depth=best_hyperparameters_RForest.max_depth,
+            n_estimators=best_hyperparameters_RForest.n_estimators,
             random_state=123).fit(self.x_train, self.y_train))
+
         best_hyperparameters_SVM = self.get_best_hyperparameters_SVM()
         self.models_developed.append(SVC(
             C=best_hyperparameters_SVM.C,
             gamma=best_hyperparameters_SVM.gamma,
             probability=True, random_state=123).fit(self.x_train_norm, self.y_train))
 
+        for model in self.models_developed:
+            if 'SVC' not in str(model):
+                y_pred = model.predict(self.x_test)
+                log.info(
+                    "accuracy of " + str(model) + " model is: " + str(
+                        sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
+                log.info("confusion matrix of " + str(model) + "model is: \n" + str(
+                    sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
+                log.info("recall of " + str(model) + "model is: " + str(sklm.recall_score(
+                    y_true=self.y_test, y_pred=y_pred)))
+            else:
+                y_pred = model.predict(self.x_test_norm)
+                log.info(
+                    "accuracy of " + str(model) + " model is: " + str(
+                        sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
+                log.info("confusion matrix of " + str(model) + "model is: \n" + str(
+                    sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
+                log.info("recall of " + str(model) + "model is: " + str(sklm.recall_score(
+                    y_true=self.y_test, y_pred=y_pred)))
+
         pred_1 = self.models_developed[0].predict_proba(self.x_test)
         pred_2 = self.models_developed[1].predict_proba(self.x_test)
         pred_3 = self.models_developed[2].predict_proba(self.x_test_norm)
         weighted_ensemble_pred = pred_1 * 0.7 + pred_2 * 0.15 + pred_3 * 0.15
 
-        y_pred = self.models_developed[0].predict(self.x_test)
-        log.info("accuracy of GB model is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
-        log.info("confusion matrix of GB model is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
-        log.info("recall of GB model is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
+        y_pred = (weighted_ensemble_pred[0:, 1] >= self.threshold).astype(int)
+        log.info("accuracy of ensemble model 1 is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
+        log.info(
+            "confusion matrix of ensemble model 1 is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
+        log.info("recall of ensemble model 1 is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
 
-        y_pred = self.models_developed[1].predict(self.x_test)
-        log.info("accuracy of RF model is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
-        log.info("confusion matrix of RF model is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
-        log.info("recall of RF model is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
-
-        y_pred = self.models_developed[2].predict(self.x_test_norm)
-        log.info("accuracy of SVM model is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
-        log.info("confusion matrix of SVM model is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
-        log.info("recall of SVM model is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
+        pred_1 = self.models_developed[0].predict_proba(self.x_test)
+        pred_2 = self.models_developed[1].predict_proba(self.x_test)
+        pred_3 = self.models_developed[2].predict_proba(self.x_test_norm)
+        weighted_ensemble_pred = pred_1 * 0.65 + pred_2 * 0.25 + pred_3 * 0.1
 
         y_pred = (weighted_ensemble_pred[0:, 1] >= self.threshold).astype(int)
-        log.info("accuracy of model is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
-        log.info("confusion matrix of model is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
-        log.info("recall of model is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
+        log.info("accuracy of ensemble model 2 is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
+        log.info(
+            "confusion matrix of ensemble model 2 is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
+        log.info("recall of ensemble model 2 is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
 
         x_test = self.input_df.drop([keys.DROP_OUT_KEY], axis=1)
         y_test = self.input_df[keys.DROP_OUT_KEY]
@@ -242,78 +263,10 @@ class QuadrimestersEnsemble(AnalysisModeling):
         pred_3 = self.models_developed[2].predict_proba(x_test_norm)
         weighted_ensemble_pred = pred_1 * 0.7 + pred_2 * 0.15 + pred_3 * 0.15
         y_pred = (weighted_ensemble_pred[0:, 1] >= self.threshold).astype(int)
-
-        log.info("accuracy of model with complete data is: " + str(sklm.accuracy_score(y_true=y_test, y_pred=y_pred)))
-        log.info("confusion matrix of model with complete data is: \n" + str(sklm.confusion_matrix(y_true=y_test,
-                                                                                                   y_pred=y_pred)))
-        log.info("recall of model with complete data is: " + str(sklm.recall_score(y_true=y_test, y_pred=y_pred)))
-
         self.y_pred = y_pred
 
     def save(self):
-
-        feature_names = self.x_test.columns
-        fig = []
-        for model in self.models_developed:
-            if 'SVC' not in str(model):
-                result = permutation_importance(
-                    model, self.x_test, self.y_test, n_repeats=3, random_state=42, n_jobs=-1)
-            else:
-                result = permutation_importance(
-                    model, self.x_test_norm, self.y_test, n_repeats=3, random_state=42, n_jobs=-1)
-            logit_importances = pd.Series(result.importances_mean, index=feature_names)
-            logit_importances = logit_importances[logit_importances > 0.001]
-
-            logit_importances = pd.DataFrame({'Feature': logit_importances.sort_values(ascending=False).index,
-                                              'Permutation_importance': logit_importances.sort_values(
-                                                  ascending=False)}).reset_index(drop=True)
-
-            fig.append(px.bar(logit_importances, x='Feature', y='Permutation_importance'))
-
-            positive_correlation = []
-            negative_correlation = []
-            for feature in logit_importances['Feature']:
-                self.get_type_correlation(self.input_df[feature],
-                                          self.input_df[keys.DROP_OUT_KEY], positive_correlation,
-                                          negative_correlation)
-
-            log.info("features with positive correlation with target feature are: \n" + str(positive_correlation))
-            log.info("features with negative correlation with target feature are: \n" + str(negative_correlation))
-
-        output_path = Path(self.output_path_segment)
-        output_path_parent = output_path.parent
-        if not output_path_parent.exists():
-            output_path_parent.mkdir(parents=True)
-
-        path_segment = str(output_path_parent)
-        output_path_plot = Path(path_segment) / 'gradient_boosting_feature_importances'
-        output_path_plot = output_path_plot.with_suffix(".html")
-        py.offline.plot(fig[0], filename=str(output_path_plot))
-
-        path_segment = str(output_path_parent)
-        output_path_plot = Path(path_segment) / 'random_forest_feature_importances'
-        output_path_plot = output_path_plot.with_suffix(".html")
-        py.offline.plot(fig[1], filename=str(output_path_plot))
-
-        path_segment = str(output_path_parent)
-        output_path_plot = Path(path_segment) / 'SVC_feature_importances'
-        output_path_plot = output_path_plot.with_suffix(".html")
-        py.offline.plot(fig[2], filename=str(output_path_plot))
-
         self.final_analys_record_personal_access[self.model_number] = self.y_pred
-
-        self.final_analys_record_personal_access[keys.PLAN_DESCRIPTION_KEY] = self.final_analys_record_personal_access[
-            keys.PLAN_DESCRIPTION_KEY].astype('category')
-        for degree in self.final_analys_record_personal_access[keys.PLAN_DESCRIPTION_KEY].cat.categories:
-            data = self.final_analys_record_personal_access[self.final_analys_record_personal_access[
-                                                                keys.PLAN_DESCRIPTION_KEY] == degree]
-            log.info("accuracy of model of degree " + degree + " is: " + str(sklm.accuracy_score(
-                y_true=data[keys.DROP_OUT_KEY], y_pred=data[self.model_number])))
-            log.info("confusion matrix of model of degree " + degree + " is: \n" + str(sklm.confusion_matrix(
-                y_true=data[keys.DROP_OUT_KEY], y_pred=data[self.model_number])))
-            log.info("recall of model of degree " + degree + " is: " + str(sklm.recall_score(
-                y_true=data[keys.DROP_OUT_KEY], y_pred=data[self.model_number])))
-
         self.final_analys_record_personal_access.to_csv(
             self.output_path_segment,
             sep=self.output_separator,
@@ -322,7 +275,7 @@ class QuadrimestersEnsemble(AnalysisModeling):
 
 def main():
     logging.basicConfig(
-        filename="debug.log",
+        filename="debug_ensemble.log",
         level=logging.DEBUG,
         format="%(asctime)-15s %(levelname)8s %(name)s %(message)s")
     logging.getLogger("matplotlib").setLevel(logging.ERROR)
