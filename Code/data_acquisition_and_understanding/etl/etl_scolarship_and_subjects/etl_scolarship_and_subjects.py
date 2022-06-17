@@ -85,7 +85,7 @@ def main():
         output_separator="|",
         save_report_on_load=False,
         save_report_on_save=False,
-        report_type=ETL.ReportType.Both,
+        report_type=ETL.ReportType.Standard,
     )
     etl.execute()
 

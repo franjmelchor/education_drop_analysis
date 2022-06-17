@@ -12,12 +12,33 @@ import statistics
 log = logging.getLogger(__name__)
 
 dset = pd.DataFrame
+pr_scholarship_per_year: pd.DataFrame
 
 
 def get_median(cod_plan):
     global dset
     return statistics.median(
         dset['nota_admision_def'][(dset['nota_admision_def'].notna()) & (dset['cod_plan'] == cod_plan)])
+
+
+def get_course_p_data_scholarship(p: pd.Series, course: int):
+    p_data = pr_scholarship_per_year[(pr_scholarship_per_year['cod_plan'] == p.cod_plan)
+                                     & (pr_scholarship_per_year['expediente'] == p.expediente)
+                                     ].sort_values(by=['curso_academico'])
+    try:
+        academic_year = p_data['curso_academico'].unique()[course - 1]
+        p_data = p_data[p_data['curso_academico'] == academic_year]
+        return p_data
+    except:
+        return pd.Series()
+
+
+def get_scholarship(p: pd.Series, course: int):
+    p_data = get_course_p_data_scholarship(p, course)
+    if len(p_data.index) > 0:
+        return p_data['becario'].values[0]
+    else:
+        return -1
 
 
 class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
@@ -53,6 +74,7 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         self.output_path_segment = ArgumentParserHelper.parse_data_file_path(
             data_file_path=arguments.output_path,
             check_is_file=False)
+
     @FeatureEngineering.stopwatch
     def process(self):
         """
@@ -67,8 +89,10 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
                           keys.FINAL_ADMISION_NOTE_KEY, keys.GENDER_KEY, keys.BIRTH_DATE_KEY,
                           keys.PROVINCE_KEY, keys.TOWN_KEY]
 
-        global dset
+        global dset, pr_scholarship_per_year
+
         dset = self.input_dfs[0].copy()
+        pr_scholarship_per_year = self.input_dfs[1]
 
         cols_before = len(self.input_dfs[0].columns)
         self.input_dfs[0] = self.input_dfs[0][analys_columns]
@@ -101,28 +125,23 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         rows_after = len(self.input_dfs[0].index)
         self.changes["remove nan values"] = rows_before - rows_after
 
-        # self.input_dfs[0][keys.BIRTH_DATE_KEY] = pd.to_datetime(self.input_dfs[0][keys.BIRTH_DATE_KEY])
-        # self.input_dfs[0][keys.BIRTH_DATE_KEY] = self.input_dfs[0][keys.BIRTH_DATE_KEY].apply(lambda func: func.year)
-        # self.input_dfs[0].rename(columns={keys.BIRTH_DATE_KEY: keys.BIRTH_YEAR_KEY}, inplace=True)
-        # anio_nacimiento_bcket_array = np.linspace(1955, 2005, 11)
-        # self.input_dfs[0][keys.BIRTH_YEAR_INTERVAL_KEY] = pd.cut(
-        #     self.input_dfs[0][keys.BIRTH_YEAR_KEY], anio_nacimiento_bcket_array, include_lowest=True)
-        # self.input_dfs[0].drop([keys.BIRTH_YEAR_KEY], axis=1, inplace=True)
-        # log.info("Get only birth year of birth date")
-
         self.input_dfs[0]['fecha_curso'] = '2016-01-01'
         self.input_dfs[0]['fecha_curso'] = pd.to_datetime(self.input_dfs[0]['fecha_curso'])
         self.input_dfs[0]['fecha_nacimiento'] = pd.to_datetime(self.input_dfs[0]['fecha_nacimiento'])
         self.input_dfs[0]['edad_acceso'] = self.input_dfs[0].apply(
             lambda func: func.fecha_curso.year - func.fecha_nacimiento.year, axis=1)
-        year_bcket_array = np.array([18,20,25,30,35,40,45,50,55,60])
+        year_bcket_array = np.array([18, 20, 25, 30, 35, 40, 45, 50, 55, 60])
         self.input_dfs[0]['edad_acceso'] = pd.cut(
             self.input_dfs[0]['edad_acceso'], year_bcket_array, include_lowest=True)
-        self.input_dfs[0].drop([keys.BIRTH_DATE_KEY],axis=1,inplace=True)
+        self.input_dfs[0].drop([keys.BIRTH_DATE_KEY, 'fecha_curso'], axis=1, inplace=True)
 
         self.input_dfs[0][keys.DROP_OUT_KEY] = self.input_dfs[0][keys.DROP_OUT_KEY].apply(
             lambda func: 1 if func == 'S' else 0)
         log.info("Change format to " + keys.DROP_OUT_KEY + " feature")
+
+        self.input_dfs[0][keys.SCHOLARSHIP_KEY] = self.input_dfs[0].apply(
+            lambda func: get_scholarship(func, course=1), axis=1
+        )
 
         self.output_df = self.input_dfs[0]
 
@@ -143,7 +162,7 @@ def main():
         output_separator='|',
         report_type=FeatureEngineering.ReportType.Standard,
         save_report_on_load=False,
-        save_report_on_save=False
+        save_report_on_save=True
     )
     feature_eng.execute()
 

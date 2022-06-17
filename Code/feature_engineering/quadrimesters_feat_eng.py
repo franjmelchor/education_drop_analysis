@@ -228,7 +228,8 @@ def main():
         input_separator='|',
         output_separator='|',
         save_report_on_load=False,
-        save_report_on_save=False
+        save_report_on_save=True,
+        report_type=FeatureEngineering.ReportType.Standard,
     )
     feat_eng.execute()
 

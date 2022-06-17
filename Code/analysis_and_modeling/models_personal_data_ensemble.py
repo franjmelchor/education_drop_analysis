@@ -243,19 +243,7 @@ class QuadrimestersEnsemble(AnalysisModeling):
             "confusion matrix of ensemble model 1 is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
         log.info("recall of ensemble model 1 is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
 
-        pred_1 = self.models_developed[0].predict_proba(self.x_test)
-        pred_2 = self.models_developed[1].predict_proba(self.x_test)
-        pred_3 = self.models_developed[2].predict_proba(self.x_test_norm)
-        weighted_ensemble_pred = pred_1 * 0.65 + pred_2 * 0.25 + pred_3 * 0.1
-
-        y_pred = (weighted_ensemble_pred[0:, 1] >= self.threshold).astype(int)
-        log.info("accuracy of ensemble model 2 is: " + str(sklm.accuracy_score(y_true=self.y_test, y_pred=y_pred)))
-        log.info(
-            "confusion matrix of ensemble model 2 is: \n" + str(sklm.confusion_matrix(y_true=self.y_test, y_pred=y_pred)))
-        log.info("recall of ensemble model 2 is: " + str(sklm.recall_score(y_true=self.y_test, y_pred=y_pred)))
-
         x_test = self.input_df.drop([keys.DROP_OUT_KEY], axis=1)
-        y_test = self.input_df[keys.DROP_OUT_KEY]
         x_test_norm = norm.transform(x_test)
 
         pred_1 = self.models_developed[0].predict_proba(x_test)

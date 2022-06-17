@@ -91,11 +91,6 @@ class RecordPersonalAccessETL(ETL):
         rows_after = len(self.input_dfs[0].index)
         self.changes["delete data of people without all information"] = rows_before - rows_after
 
-        rows_affected = len(self.input_dfs[0][pd.isna(self.input_dfs[0][keys.TRANSFER_TYPE_KEY])].index)
-        self.input_dfs[0][keys.TRANSFER_TYPE_KEY] = self.input_dfs[0][keys.TRANSFER_TYPE_KEY].apply(
-            lambda func: 'N' if pd.isna(func) else func)
-        self.changes["resolve values null of tipo_tralado column"] = rows_affected
-
         log.info("columns of final dataset are:" + str(self.input_dfs[0].columns))
         log.info("final number of rows: " + str(len(self.input_dfs[0].index)))
 
@@ -119,7 +114,7 @@ def main():
         output_separator="|",
         save_report_on_save=False,
         save_report_on_load=False,
-        report_type=ETL.ReportType.Both,
+        report_type=ETL.ReportType.Standard,
     )
     etl.execute()
 

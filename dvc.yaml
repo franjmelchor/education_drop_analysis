@@ -69,7 +69,7 @@ stages:
   feat_eng_pol_personal_data:
     cmd: >-
       python3 ${dvc_root}${scripts.feat_eng.personal_data_script}
-      -i "${dvc_root}${data.processed_data.pol.personal_data}"
+      -i "${dvc_root}${data.processed_data.pol.personal_data}" "${dvc_root}${data.processed_data.pol.scholarship}"
       -o "${dvc_root}${data.analys_data.personal_data.pol}"
     deps:
       - ${dvc_root}${data.processed_data.pol.personal_data}

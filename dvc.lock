@@ -42,24 +42,24 @@ stages:
       de expediente,personales y de acceso.xls" -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/personal_data.csv"
     deps:
     - path: ../../../Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls
-      md5: bf5e5bfbc15e97cbf9622afaebb2a109
-      size: 1867264
+      md5: 4839865c071e239743c8fda0cc750cb8
+      size: 1806336
     outs:
     - path: ../../../Data/Interim/personal_data.csv
-      md5: 51d3994409479e9a37819cd721447bd9
-      size: 1027023
+      md5: 41f40fff66805830d23e878449185623
+      size: 1004452
   fetch_data_pol_subjects:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Raw/Politecnica -plan asignatura
       convocatoria.xls" -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/subjects.csv"
     deps:
     - path: ../../../Data/Raw/Politecnica -plan asignatura convocatoria.xls
-      md5: 7b74013f840e2cd6c73658ae0a7dfa6a
-      size: 49014272
+      md5: b2d237b00715ff4e952161a0ad0991eb
+      size: 46277632
     outs:
     - path: ../../../Data/Interim/subjects.csv
-      md5: b99fe3b51dbfac03bc1cd5c8abc52207
-      size: 28021726
+      md5: 334498bfa9447c2cbd0998b719c7d8f0
+      size: 27782685
   fetch_data_pol_scolarship:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Raw/Politecnica -becario
@@ -78,15 +78,15 @@ stages:
       "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Processed/pr_subjects.csv"
     deps:
     - path: ../../../../Data/Interim/subjects.csv
-      md5: b99fe3b51dbfac03bc1cd5c8abc52207
-      size: 28021726
+      md5: 334498bfa9447c2cbd0998b719c7d8f0
+      size: 27782685
     - path: ../../../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
   etl_pol_personal_data:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/personal_data.csv"
@@ -94,18 +94,18 @@ stages:
       -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Processed/pr_personal_data.csv"
     deps:
     - path: ../../../../Data/Interim/personal_data.csv
-      md5: 51d3994409479e9a37819cd721447bd9
-      size: 1027023
+      md5: 41f40fff66805830d23e878449185623
+      size: 1004452
     - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../../../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../../../Data/Processed/pr_personal_data.csv
-      md5: 606d8a176e97a4e7db1646960bf7f0e0
-      size: 461665
+      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
+      size: 447369
   etl_pol_scolarship:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/scholarship.csv"
@@ -115,8 +115,8 @@ stages:
       md5: 1c079440cee2bcc23facccdfba25d3bd
       size: 1078933
     - path: ../../../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
@@ -124,18 +124,19 @@ stages:
   feat_eng_pol_personal_data:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/personal_data_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Processed/pr_personal_data.csv"
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Processed/pr_scolarship.csv"
       -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
     deps:
     - path: ../../Data/Processed/pr_personal_data.csv
-      md5: 606d8a176e97a4e7db1646960bf7f0e0
-      size: 461665
+      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
+      size: 447369
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: c23e9524cc9e7736439f8a1b480047f9
-      size: 312187
+      md5: c7c593df9c7eb8dda0daf941c07f255c
+      size: 291636
   feat_sel_pol_personal_data:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
@@ -143,37 +144,37 @@ stages:
       -c 0 -q 0
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: c23e9524cc9e7736439f8a1b480047f9
-      size: 312187
+      md5: c7c593df9c7eb8dda0daf941c07f255c
+      size: 291636
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
-      md5: 4d54c05f1d69066ceb6ec33345487727
-      size: 287062
+      md5: b887e4e0216b5464dcc6aedc2403ab0d
+      size: 291636
   analysis_pol_personal_data:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
       -c 0 -q 0 -mn "1st_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
-      md5: 4d54c05f1d69066ceb6ec33345487727
-      size: 287062
+      md5: b887e4e0216b5464dcc6aedc2403ab0d
+      size: 291636
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
   analysis_pol_personal_data_hyp_tunning:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_personal_data_hyp_tunning.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
       -c 0 -q 0 -mn "1st_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
-      md5: 4d54c05f1d69066ceb6ec33345487727
-      size: 287062
+      md5: b887e4e0216b5464dcc6aedc2403ab0d
+      size: 291636
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
   analysis_pol_personal_data_ensemble:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_personal_data_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
@@ -181,15 +182,15 @@ stages:
       -c 0 -q 0 -mn "1st_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
-      md5: 4d54c05f1d69066ceb6ec33345487727
-      size: 287062
+      md5: b887e4e0216b5464dcc6aedc2403ab0d
+      size: 291636
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/personal_data/pred_analys_personal_data.csv
-      md5: d67a6e538f8891c7bda68b8ff5b21db0
-      size: 305497
+      md5: a6a8d5c51d47748374881758509ddca5
+      size: 310071
   feat_eng_pol_1st_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/pred_analys_personal_data.csv"
@@ -198,21 +199,21 @@ stages:
       -c 1 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/pred_analys_personal_data.csv
-      md5: d67a6e538f8891c7bda68b8ff5b21db0
-      size: 305497
+      md5: a6a8d5c51d47748374881758509ddca5
+      size: 310071
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv
-      md5: 2a2dfce960625fe710a4169f9f961236
-      size: 365855
+      md5: d2eec08556b5738e7170c8929b963c7e
+      size: 365851
   feat_sel_pol_1st_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv"
@@ -220,37 +221,37 @@ stages:
       -c 1 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv
-      md5: 2a2dfce960625fe710a4169f9f961236
-      size: 365855
+      md5: d2eec08556b5738e7170c8929b963c7e
+      size: 365851
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
-      md5: 8e0c8284cb4e131bb9267a286e0c7c62
-      size: 355018
+      md5: 6da6a8345467fda612d07c79673b198f
+      size: 355014
   analys_pol_1st_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 1 -mn "2nd_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
-      md5: 8e0c8284cb4e131bb9267a286e0c7c62
-      size: 355018
+      md5: 6da6a8345467fda612d07c79673b198f
+      size: 355014
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
   analysis_pol_1st_quad_hyp_tunning:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_hyp_tunning.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 1 -mn "2nd_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
-      md5: 8e0c8284cb4e131bb9267a286e0c7c62
-      size: 355018
+      md5: 6da6a8345467fda612d07c79673b198f
+      size: 355014
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
   analysis_pol_1st_quad_ensemble:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
@@ -258,15 +259,15 @@ stages:
       -c 1 -q 1 -mn "2nd_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
-      md5: 8e0c8284cb4e131bb9267a286e0c7c62
-      size: 355018
+      md5: 6da6a8345467fda612d07c79673b198f
+      size: 355014
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv
-      md5: 1ac75209c5665b28497c4fa1571cdf96
-      size: 376161
+      md5: 1bf9abb7050da4fc2c98a13d582f4693
+      size: 376157
   feat_eng_pol_2nd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv"
@@ -276,21 +277,21 @@ stages:
       -c 1 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv
-      md5: 1ac75209c5665b28497c4fa1571cdf96
-      size: 376161
+      md5: 1bf9abb7050da4fc2c98a13d582f4693
+      size: 376157
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
-      md5: 6b55f28b6bd94fae3f73730a5d326fd6
-      size: 384213
+      md5: 07d1156d82c1ffeb9aeadf31849da2e3
+      size: 384209
   feat_sel_pol_2nd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
@@ -298,15 +299,15 @@ stages:
       -c 1 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
-      md5: 6b55f28b6bd94fae3f73730a5d326fd6
-      size: 384213
+      md5: 07d1156d82c1ffeb9aeadf31849da2e3
+      size: 384209
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
-      md5: 3eb0c01f03cbd598f25dd106b0e56df0
-      size: 372187
+      md5: 8711b82005deee6297548a7fd5e15b19
+      size: 372183
   analys_pol_2nd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv"
@@ -314,15 +315,15 @@ stages:
       -c 1 -q 2 -mn "3rd_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
-      md5: 3eb0c01f03cbd598f25dd106b0e56df0
-      size: 372187
+      md5: 8711b82005deee6297548a7fd5e15b19
+      size: 372183
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv
-      md5: f03d320ce80127ef8355f6d328b838cf
-      size: 380048
+      md5: a88850873c18a419dce205c4b328b9da
+      size: 380044
   feat_eng_pol_3rd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv"
@@ -332,21 +333,21 @@ stages:
       -c 2 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv
-      md5: f03d320ce80127ef8355f6d328b838cf
-      size: 380048
+      md5: a88850873c18a419dce205c4b328b9da
+      size: 380044
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv
-      md5: 4824b005b83c4d83a7e3f31de0e457d3
-      size: 319185
+      md5: 217144f08985143d0f54109b14ff2794
+      size: 319181
   feat_sel_pol_3rd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv"
@@ -354,15 +355,15 @@ stages:
       -c 2 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv
-      md5: 4824b005b83c4d83a7e3f31de0e457d3
-      size: 319185
+      md5: 217144f08985143d0f54109b14ff2794
+      size: 319181
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
-      md5: c4375bc78005f1dff9903a89d50798ff
-      size: 257792
+      md5: 55664d5300fbce01fd73fbaa9c895699
+      size: 257788
   analys_pol_3rd_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv"
@@ -370,15 +371,15 @@ stages:
       -c 2 -q 1 -mn "4th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
-      md5: c4375bc78005f1dff9903a89d50798ff
-      size: 257792
+      md5: 55664d5300fbce01fd73fbaa9c895699
+      size: 257788
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv
-      md5: 72cf8378941856adbcdd77f07ccf64a1
-      size: 256039
+      md5: f7c83b63f3e03876025528c5677d8381
+      size: 256035
   feat_eng_pol_4th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv"
@@ -388,21 +389,21 @@ stages:
       -c 2 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv
-      md5: 72cf8378941856adbcdd77f07ccf64a1
-      size: 256039
+      md5: f44a6993c5f7a879c8dc68cc016f29ce
+      size: 256035
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv
-      md5: 0138bb28e4edf4a623b864933168849d
-      size: 301592
+      md5: 38a4a2ac2b786b834a5794aafc96b94a
+      size: 301588
   feat_sel_pol_4th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv"
@@ -410,15 +411,15 @@ stages:
       -c 2 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv
-      md5: 0138bb28e4edf4a623b864933168849d
-      size: 301592
+      md5: 38a4a2ac2b786b834a5794aafc96b94a
+      size: 301588
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
-      md5: a1234084cbac98cdf20b6a2d48018378
-      size: 264167
+      md5: 5e9bf0bb4941c1889c99fb449adf5fb1
+      size: 264163
   analys_pol_4th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv"
@@ -426,15 +427,15 @@ stages:
       -c 2 -q 2 -mn "5th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
-      md5: a1234084cbac98cdf20b6a2d48018378
-      size: 264167
+      md5: 5e9bf0bb4941c1889c99fb449adf5fb1
+      size: 264163
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv
-      md5: 907504df05adeec8d55cb0fab23c401f
-      size: 258858
+      md5: ec73bd5af88657a75f3544c709d9cee8
+      size: 258854
   feat_eng_pol_5th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv"
@@ -444,21 +445,21 @@ stages:
       -c 3 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv
-      md5: 907504df05adeec8d55cb0fab23c401f
-      size: 258858
+      md5: ed6449534e8ad7c96a5c8a10a61d42f7
+      size: 258854
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv
-      md5: 36369e22d0c0d5117b9bdffe3381498e
-      size: 263655
+      md5: c0f71abc9773dce6b6e4375388be49c2
+      size: 263651
   feat_sel_pol_5th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv"
@@ -466,15 +467,15 @@ stages:
       -c 3 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv
-      md5: 36369e22d0c0d5117b9bdffe3381498e
-      size: 263655
+      md5: c0f71abc9773dce6b6e4375388be49c2
+      size: 263651
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
-      md5: 00b13cbdfdf6962b314e022241f2fdcb
-      size: 254712
+      md5: d5cac68b37d4205128f7730f47ab5380
+      size: 254708
   analys_pol_5th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv"
@@ -482,15 +483,15 @@ stages:
       -c 3 -q 1 -mn "6th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
-      md5: 00b13cbdfdf6962b314e022241f2fdcb
-      size: 254712
+      md5: d5cac68b37d4205128f7730f47ab5380
+      size: 254708
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv
-      md5: 5ddff06d424b7544384f81583d8a7e6f
-      size: 243921
+      md5: 49978b47b0c0a2a372101e7a834e8fe2
+      size: 243917
   feat_eng_pol_6th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv"
@@ -500,21 +501,21 @@ stages:
       -c 3 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv
-      md5: 5ddff06d424b7544384f81583d8a7e6f
-      size: 243921
+      md5: 4a91055fe3e06a4f5ab401ef7ffca79e
+      size: 243917
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv
-      md5: d88e8b2d90b39ddf306ffa87c4fde2d7
-      size: 265493
+      md5: 481b882654cc1ea606103dcd0607ba8c
+      size: 265489
   feat_sel_pol_6th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv"
@@ -522,15 +523,15 @@ stages:
       -c 3 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv
-      md5: d88e8b2d90b39ddf306ffa87c4fde2d7
-      size: 265493
+      md5: 481b882654cc1ea606103dcd0607ba8c
+      size: 265489
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
-      md5: d42589bd2b51001a314c8dc12f88084c
-      size: 256695
+      md5: cd6f636e111eaa435b76628110453993
+      size: 256691
   analys_pol_6th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv"
@@ -538,15 +539,15 @@ stages:
       -c 3 -q 2 -mn "7th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
-      md5: d42589bd2b51001a314c8dc12f88084c
-      size: 256695
+      md5: cd6f636e111eaa435b76628110453993
+      size: 256691
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv
-      md5: b27a452980ea731e920aec7060b66633
-      size: 245332
+      md5: 4ed166d717befdfebac2417a6eba995f
+      size: 245328
   feat_eng_pol_7th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv"
@@ -556,21 +557,21 @@ stages:
       -c 4 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv
-      md5: b27a452980ea731e920aec7060b66633
-      size: 245332
+      md5: 3c32446adfa455b81da84636e1d1a2f5
+      size: 245328
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv
-      md5: f887f368bbf218bd7666ada32b3a62d1
-      size: 242371
+      md5: bdeb7788612ff2727c4b25d29b937463
+      size: 242367
   feat_sel_pol_7th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv"
@@ -578,15 +579,15 @@ stages:
       -c 4 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv
-      md5: f887f368bbf218bd7666ada32b3a62d1
-      size: 242371
+      md5: bdeb7788612ff2727c4b25d29b937463
+      size: 242367
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
-      md5: 6b496a363aaf97a0a3d4018ada52c46d
-      size: 240253
+      md5: 9aeea6d36993e5164c29c5f7c5802cc2
+      size: 240249
   analys_pol_7th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv"
@@ -594,15 +595,15 @@ stages:
       -c 4 -q 1 -mn "8th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
-      md5: 6b496a363aaf97a0a3d4018ada52c46d
-      size: 240253
+      md5: 9aeea6d36993e5164c29c5f7c5802cc2
+      size: 240249
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv
-      md5: 50f6116cd223d08f0fabb4fd62993c35
-      size: 236724
+      md5: b3a76801562a2a0b4f46a4fd79b9543f
+      size: 236720
   feat_eng_pol_8th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_engineering/quadrimesters_feat_eng.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv"
@@ -612,21 +613,21 @@ stages:
       -c 4 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv
-      md5: 50f6116cd223d08f0fabb4fd62993c35
-      size: 236724
+      md5: 69b7bfc2e674df3ba38f5cadc225262f
+      size: 236720
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv
-      md5: 1449694e4cf200dc6e7a0cb4da11cf33
-      size: 256172
+      md5: a476a8790f8237da08398514abe1e3a4
+      size: 256168
   feat_sel_pol_8th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv"
@@ -634,15 +635,15 @@ stages:
       -c 4 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv
-      md5: 1449694e4cf200dc6e7a0cb4da11cf33
-      size: 256172
+      md5: a476a8790f8237da08398514abe1e3a4
+      size: 256168
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
-      md5: 62e200c3163c47e7b817bb1578922b87
-      size: 254107
+      md5: a835ab1af4cc9ac1831461e9979dbc91
+      size: 254103
   analys_pol_8th_quad:
     cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv"
@@ -650,12 +651,12 @@ stages:
       -c 4 -q 2 -mn "9th_model"
     deps:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
-      md5: 62e200c3163c47e7b817bb1578922b87
-      size: 254107
+      md5: a835ab1af4cc9ac1831461e9979dbc91
+      size: 254103
     - path: ../keys.py
-      md5: 6725ee46ab49f1fe47530a80e836e293
-      size: 1222
+      md5: 57fe24153e2ca1f7fad17b2cf642d8ee
+      size: 1218
     outs:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/pred_analys_personal_data.csv
-      md5: 65005acc9470ce87824c026b025d931e
-      size: 236391
+      md5: 6de5ffbcf75d73ee2c825fc1383cd32e
+      size: 236387
