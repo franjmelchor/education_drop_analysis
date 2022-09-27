@@ -43,6 +43,7 @@ class QuadrimestersFeatureSelection(DataProcessor):
             check_is_file=False)
         self.course = int(arguments.course)
         self.quadrimester = int(arguments.quadrimester)
+
     def process(self):
         """
         Feature selection of analys_record_personal_access
@@ -60,16 +61,23 @@ class QuadrimestersFeatureSelection(DataProcessor):
         dv_analys_record_personal_access = self.input_df.drop([keys.RECORD_KEY, keys.PLAN_CODE_KEY], axis=1)
 
         if self.course == 0:
-            categorical_cols = dv_analys_record_personal_access.drop([keys.FINAL_ADMISION_NOTE_KEY], axis=1).columns
+            categorical_cols = dv_analys_record_personal_access.drop([keys.FINAL_ADMISION_NOTE_KEY, keys.AGE_KEY,
+                                                                      keys.DISTANCE_KEY], axis=1).columns
         elif self.course == 1:
-            categorical_cols = dv_analys_record_personal_access.drop(
-                [keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY],
-                axis=1).columns
+            categorical_cols = dv_analys_record_personal_access.drop([keys.FINAL_ADMISION_NOTE_KEY, keys.AGE_KEY,
+                                                                      keys.DISTANCE_KEY, keys.CUM_PASS_RATIO_KEY,
+                                                                      keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY,
+                                                                      keys.CUM_PASS_MEDIAN_KEY, keys.CUM_FAIL_MEDIAN_KEY
+                                                                      , keys.STD_DEVIATION_KEY
+                                                                      ], axis=1).columns
         else:
-            categorical_cols = dv_analys_record_personal_access.drop(
-                [keys.CUM_PASS_RATIO_KEY, keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY,
-                 keys.CUM_MORE_1ST_CALL_RATIO_KEY],
-                axis=1).columns
+            categorical_cols = dv_analys_record_personal_access.drop([keys.FINAL_ADMISION_NOTE_KEY, keys.AGE_KEY,
+                                                                      keys.DISTANCE_KEY, keys.CUM_PASS_RATIO_KEY,
+                                                                      keys.CUM_ABSENT_RATIO_KEY, keys.CUM_MEDIAN_KEY,
+                                                                      keys.CUM_PASS_MEDIAN_KEY,
+                                                                      keys.CUM_FAIL_MEDIAN_KEY, keys.STD_DEVIATION_KEY,
+                                                                      keys.CUM_MORE_1ST_CALL_RATIO_KEY
+                                                                      ], axis=1).columns
 
         for col in categorical_cols:
             chi2_test = HypothesisTest(
@@ -88,7 +96,8 @@ class QuadrimestersFeatureSelection(DataProcessor):
                 dataframe=dv_analys_record_personal_access,
                 test_type=HypothesisTest.TestType.Spearman,
                 target=dv_analys_record_personal_access[keys.DROP_OUT_KEY],
-                candidates=[dv_analys_record_personal_access[col]]
+                candidates=[dv_analys_record_personal_access[col]],
+                significance_value=0.1
             )
             dependency_tests.append(spearman_test)
 
@@ -119,7 +128,10 @@ def main():
 
     feat_sel = QuadrimestersFeatureSelection(
         input_separator='|',
-        output_separator='|'
+        output_separator='|',
+        save_report_on_save=True,
+        report_type=DataProcessor.ReportType.Standard
+
     )
     feat_sel.parse_arguments()
     feat_sel.load()

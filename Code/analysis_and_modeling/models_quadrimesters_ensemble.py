@@ -128,30 +128,32 @@ class QuadrimestersEnsemble(AnalysisModeling):
 
         log.debug("QuadrimestersEnsemble.process()")
 
-        if keys.CUM_MEDIAN_KEY in self.input_df.columns:
-            note_bcket_array = np.array([0, 1.5, 3, 4.5, 6, 7.5, 9, 10])
-            self.input_df[keys.CUM_MEDIAN_INTERVAL_KEY] = pd.cut(
-                self.input_df[keys.CUM_MEDIAN_KEY], note_bcket_array, include_lowest=True)
-            self.input_df.drop([keys.CUM_MEDIAN_KEY], axis=1, inplace=True)
+        note_bcket_array = np.array([0, 1.5, 3, 4.5, 6, 7.5, 9, 10])
+        self.input_df[keys.CUM_MEDIAN_KEY] = pd.cut(
+            self.input_df[keys.CUM_MEDIAN_KEY], note_bcket_array, include_lowest=True)
 
-        if keys.CUM_PASS_RATIO_KEY in self.input_df.columns:
-            bcket_array = np.array([0, 0.25, 0.5, 0.75, 1])
-            self.input_df[keys.CUM_PASS_RATIO_KEY] = pd.cut(
-                self.input_df[keys.CUM_PASS_RATIO_KEY], bcket_array, include_lowest=True)
+        self.input_df[keys.CUM_PASS_MEDIAN_KEY] = pd.cut(
+            self.input_df[keys.CUM_PASS_MEDIAN_KEY], note_bcket_array, include_lowest=True)
 
-        if keys.CUM_ABSENT_RATIO_KEY in self.input_df.columns:
-            bcket_array = np.array([0, 0.25, 0.5, 0.75, 1])
-            self.input_df[keys.CUM_ABSENT_RATIO_KEY] = pd.cut(
-                self.input_df[keys.CUM_ABSENT_RATIO_KEY], bcket_array, include_lowest=True)
+        self.input_df[keys.CUM_FAIL_MEDIAN_KEY] = pd.cut(
+            self.input_df[keys.CUM_FAIL_MEDIAN_KEY], note_bcket_array, include_lowest=True)
 
-        if keys.CUM_MORE_1ST_CALL_RATIO_KEY in self.input_df.columns:
-            bcket_array = np.array([0, 0.25, 0.5, 0.75, 1])
-            self.input_df[keys.CUM_MORE_1ST_CALL_RATIO_KEY] = pd.cut(
-                self.input_df[keys.CUM_MORE_1ST_CALL_RATIO_KEY], bcket_array, include_lowest=True)
+        bcket_array = np.array([0, 0.25, 0.5, 0.75, 1])
+        self.input_df[keys.CUM_PASS_RATIO_KEY] = pd.cut(
+            self.input_df[keys.CUM_PASS_RATIO_KEY], bcket_array, include_lowest=True)
+
+        self.input_df[keys.CUM_ABSENT_RATIO_KEY] = pd.cut(
+            self.input_df[keys.CUM_ABSENT_RATIO_KEY], bcket_array, include_lowest=True)
+
+        self.input_df[keys.CUM_MORE_1ST_CALL_RATIO_KEY] = pd.cut(
+            self.input_df[keys.CUM_MORE_1ST_CALL_RATIO_KEY], bcket_array, include_lowest=True)
+
         self.final_analys_record_personal_access = self.input_df.copy()
 
-        if self.course == 4:
-            self.input_df.drop([keys.PLAN_DESCRIPTION_KEY], axis=1, inplace=True)
+
+
+        # if self.course == 4:
+        #     self.input_df.drop([keys.PLAN_DESCRIPTION_KEY], axis=1, inplace=True)
 
         self.input_df = pd.get_dummies(data=self.input_df,
                                        columns=self.input_df.drop(self.input_df.select_dtypes(

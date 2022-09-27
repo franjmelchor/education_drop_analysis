@@ -5,6 +5,7 @@ import logging
 import pandas as pd
 import keys
 import numpy as np
+
 log = logging.getLogger(__name__)
 
 pr_plan_subject_call: pd.DataFrame
@@ -84,9 +85,21 @@ def get_cum_absent_ratio(p: pd.Series, course: int, quadrimester: int):
     p_data = get_cum_p_data_plan_subj_call(p, course, quadrimester)
     if len(p_data.index > 0):
         n_subjects = len(p_data.index)
-        n_absent_subjects = len(p_data[p_data['des_nota']=='NO PRESENTADO'].index)
-
+        n_absent_subjects = len(p_data[p_data['des_nota'] == 'NO PRESENTADO'].index) + \
+                            len(p_data[p_data['des_nota'].isna()].index)
         return n_absent_subjects / n_subjects
+    else:
+        return -1
+
+
+def get_cum_std_deviation(p: pd.Series, course: int, quadrimester: int):
+    import numpy as np
+    p_data = get_cum_p_data_plan_subj_call(p, course, quadrimester)
+    if len(p_data.index) > 0:
+        std = np.nanstd(p_data['nota_num'])
+        if pd.isna(std):
+            std = 0
+        return std
     else:
         return -1
 
@@ -95,7 +108,34 @@ def get_cum_median(p: pd.Series, course: int, quadrimester: int):
     import numpy as np
     p_data = get_cum_p_data_plan_subj_call(p, course, quadrimester)
     if len(p_data.index) > 0:
-        return np.nanmedian(p_data['nota_num'])
+        note = np.nanmedian(p_data['nota_num'])
+        if pd.isna(note):
+            note = 0
+        return note
+    else:
+        return -1
+
+
+def get_cum_pass_median(p: pd.Series, course: int, quadrimester: int):
+    import numpy as np
+    p_data = get_cum_p_data_plan_subj_call(p, course, quadrimester)
+    if len(p_data.index) > 0:
+        note = np.nanmedian(p_data['nota_num'][p_data['nota_num'] >= 5])
+        if pd.isna(note):
+            note = 0
+        return note
+    else:
+        return -1
+
+
+def get_cum_fail_median(p: pd.Series, course: int, quadrimester: int):
+    import numpy as np
+    p_data = get_cum_p_data_plan_subj_call(p, course, quadrimester)
+    if len(p_data.index) > 0:
+        note = np.nanmedian(p_data['nota_num'][p_data['nota_num'] < 5])
+        if pd.isna(note):
+            note = 0
+        return note
     else:
         return -1
 
@@ -181,27 +221,6 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
             lambda func: get_cum_pass_ratio(func, course=self.course, quadrimester=self.quadrimester), axis=1
         )
 
-        analys_record_personal_access[keys.SCHOLARSHIP_KEY] = analys_record_personal_access.apply(
-            lambda func: get_scholarship(func, course=self.course), axis=1
-        )
-        analys_record_personal_access[keys.CUM_ABSENT_RATIO_KEY] = analys_record_personal_access.apply(
-            lambda func: get_cum_absent_ratio(func, course=self.course, quadrimester=self.quadrimester), axis=1
-        )
-        analys_record_personal_access[keys.CUM_MEDIAN_KEY] = analys_record_personal_access.apply(
-            lambda func: get_cum_median(func, course=self.course, quadrimester=self.quadrimester), axis=1
-        )
-
-        if self.course > 1:
-            analys_record_personal_access[keys.CUM_MORE_1ST_CALL_RATIO_KEY] = analys_record_personal_access.apply(
-                lambda func: get_cum_more_1st_call_ratio(func, course=self.course, quadrimester=self.quadrimester),
-                axis=1
-            )
-        cols_after = len(self.input_dfs[0].columns)
-        col_list_after = self.input_dfs[0].columns
-        self.changes["add new columns with information of quadrimester"] = cols_after - cols_before
-        log.info("new columns are :" + str(list(set(col_list_after) - set(col_list_before))))
-        log.info("final columns are: " + str(col_list_after))
-
         rows_before = len(analys_record_personal_access.index)
         analys_record_personal_access = analys_record_personal_access[analys_record_personal_access
                                                                       [keys.CUM_PASS_RATIO_KEY] != -1]
@@ -209,6 +228,37 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
 
         self.changes["removes people who have dropped out in this quadrimester"] = rows_before - rows_after
         self.changes["number of final rows"] = rows_after
+
+        analys_record_personal_access[keys.SCHOLARSHIP_KEY] = analys_record_personal_access.apply(
+            lambda func: get_scholarship(func, course=self.course), axis=1
+        )
+        analys_record_personal_access[keys.CUM_ABSENT_RATIO_KEY] = analys_record_personal_access.apply(
+            lambda func: get_cum_absent_ratio(func, course=self.course, quadrimester=self.quadrimester), axis=1
+        )
+        analys_record_personal_access[keys.STD_DEVIATION_KEY] = analys_record_personal_access.apply(
+            lambda func: get_cum_std_deviation(func, course=self.course, quadrimester=self.quadrimester), axis=1
+        )
+        analys_record_personal_access[keys.CUM_MEDIAN_KEY] = analys_record_personal_access.apply(
+            lambda func: get_cum_median(func, course=self.course, quadrimester=self.quadrimester), axis=1
+        )
+        analys_record_personal_access[keys.CUM_PASS_MEDIAN_KEY] = analys_record_personal_access.apply(
+            lambda func: get_cum_pass_median(func, course=self.course, quadrimester=self.quadrimester), axis=1
+        )
+        analys_record_personal_access[keys.CUM_FAIL_MEDIAN_KEY] = analys_record_personal_access.apply(
+            lambda func: get_cum_fail_median(func, course=self.course, quadrimester=self.quadrimester), axis=1
+        )
+
+        if self.course > 1:
+            analys_record_personal_access[keys.CUM_MORE_1ST_CALL_RATIO_KEY] = analys_record_personal_access.apply(
+                lambda func: get_cum_more_1st_call_ratio(func, course=self.course, quadrimester=self.quadrimester),
+                axis=1
+            )
+
+        cols_after = len(self.input_dfs[0].columns)
+        col_list_after = self.input_dfs[0].columns
+        self.changes["add new columns with information of quadrimester"] = cols_after - cols_before
+        log.info("new columns are :" + str(list(set(col_list_after) - set(col_list_before))))
+        log.info("final columns are: " + str(col_list_after))
 
         self.output_df = analys_record_personal_access
 

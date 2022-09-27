@@ -129,14 +129,16 @@ class QuadrimestersEnsemble(AnalysisModeling):
         log.debug("QuadrimestersEnsemble.process()")
 
         note_bcket_array = np.array([5, 6.5, 8, 9.5, 10, 11.5, 13, 14])
-        self.input_df[keys.FINAL_ADMISION_NOTE_INTERVAL_KEY] = pd.cut(
+        self.input_df[keys.FINAL_ADMISION_NOTE_KEY] = pd.cut(
             self.input_df[keys.FINAL_ADMISION_NOTE_KEY], note_bcket_array, include_lowest=True)
-        self.input_df.drop([keys.FINAL_ADMISION_NOTE_KEY], axis=1, inplace=True)
 
-        if keys.CUM_MEDIAN_KEY in self.input_df.columns:
-            self.input_df[keys.CUM_MEDIAN_INTERVAL_KEY] = pd.cut(
-                self.input_df[keys.CUM_MEDIAN_KEY], note_bcket_array, include_lowest=True)
-            self.input_df.drop([keys.CUM_MEDIAN_KEY], axis=1, inplace=True)
+        year_bcket_array = np.array([18, 20, 25, 30, 35, 40, 45, 50, 55, 60])
+        self.input_df['edad_acceso'] = pd.cut(
+            self.input_df['edad_acceso'], year_bcket_array, include_lowest=True)
+
+        distance_bcket_array = np.array([0, 0.1, 45, 90, 135, 250, 500, 1892])
+        self.input_df['distance'] = pd.cut(
+            self.input_df['distance'], distance_bcket_array, include_lowest=True)
 
         self.final_analys_record_personal_access = self.input_df.copy()
 

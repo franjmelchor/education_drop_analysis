@@ -8,11 +8,52 @@ import numpy as np
 import pandas as pd
 
 import statistics
+import swifter
+import multiprocessing
 
 log = logging.getLogger(__name__)
 
 dset = pd.DataFrame
 pr_scholarship_per_year: pd.DataFrame
+
+
+def get_distance(city_origin, city_target):
+    from geopy.geocoders import Nominatim
+    import requests
+    import json
+    geolocator = Nominatim(user_agent='edrop_cities')
+    location_origin = geolocator.geocode(city_origin)
+    location_target = geolocator.geocode(city_target)
+    r = requests.get(f"http://router.project-osrm.org/route/v1/car/{location_origin.longitude},"
+                     f"{location_origin.latitude};{location_target.longitude},{location_target.latitude}?overview=false""")
+    routes = json.loads(r.content)
+    if 'España' in str(location_target):
+        distance = routes.get("routes")[0]['distance'] / 1000
+    elif 'MEDELLÍN' in city_target:
+        distance = 114
+    elif 'SANTA MARTA' in city_target:
+        distance = 120
+    elif 'GUADALUPE' in city_target:
+        distance = 152
+    elif 'ATALAYA' in city_target:
+        distance = 97.4
+    elif 'HELECHAL' in city_target:
+        distance = 180
+    elif 'RIO TURBIO' in city_target:
+        distance = 503
+    elif 'VALDIVIA' in city_target:
+        distance = 93
+    elif 'VALVERDE' in city_target:
+        distance = 1892
+    elif 'CARTAGENA' in city_target:
+        distance = 699
+    elif 'GUADALAJARA' in city_target:
+        distance = 358
+    elif 'ENTRERRÍOS' in city_target:
+        distance = 98
+    else:
+        distance = -1
+    return distance
 
 
 def get_median(cod_plan):
@@ -107,18 +148,18 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         null_values_after = self.input_dfs[0].isnull().sum().sum()
         self.changes["resolve null values of " + keys.FINAL_ADMISION_NOTE_KEY] = null_values_before - null_values_after
 
-        col_list_before = self.input_dfs[0].columns
-        self.input_dfs[0]['lugar_origen'] = self.input_dfs[0][keys.TOWN_KEY].apply(
-            lambda func: 'MISMO_MUNICIPIO' if func == 'CÁCERES' else (func if pd.isna(func) else 'OTRO_MUNICIPIO'))
-        self.input_dfs[0]['lugar_origen'] = self.input_dfs[0].apply(
-            lambda func: func.lugar_origen if func[keys.PROVINCE_KEY] == 'CÁCERES' or
-                                              func[keys.PROVINCE_KEY] == 'BADAJOZ' else (
-                func[keys.PROVINCE_KEY] if pd.isna(func[keys.PROVINCE_KEY]) else 'OTRA_COMUNIDAD'), axis=1)
-        self.input_dfs[0].drop([keys.TOWN_KEY, keys.PROVINCE_KEY], axis=1, inplace=True)
-        col_list_after = self.input_dfs[0].columns
-        log.info("deleted columns are :" + str(list(set(col_list_before) - set(col_list_after))))
-        log.info("new column is: lugar_origen")
-        log.info("final columns are: " + str(analys_columns))
+        # col_list_before = self.input_dfs[0].columns
+        # self.input_dfs[0]['lugar_origen'] = self.input_dfs[0][keys.TOWN_KEY].apply(
+        #     lambda func: 'MISMO_MUNICIPIO' if func == 'CÁCERES' else (func if pd.isna(func) else 'OTRO_MUNICIPIO'))
+        # self.input_dfs[0]['lugar_origen'] = self.input_dfs[0].apply(
+        #     lambda func: func.lugar_origen if func[keys.PROVINCE_KEY] == 'CÁCERES' or
+        #                                       func[keys.PROVINCE_KEY] == 'BADAJOZ' else (
+        #         func[keys.PROVINCE_KEY] if pd.isna(func[keys.PROVINCE_KEY]) else 'OTRA_COMUNIDAD'), axis=1)
+        # self.input_dfs[0].drop([keys.PROVINCE_KEY], axis=1, inplace=True)
+        # col_list_after = self.input_dfs[0].columns
+        # log.info("deleted columns are :" + str(list(set(col_list_before) - set(col_list_after))))
+        # log.info("new column is: lugar_origen")
+        # log.info("final columns are: " + str(analys_columns))
 
         rows_before = len(self.input_dfs[0].index)
         self.input_dfs[0].dropna(inplace=True)
@@ -130,10 +171,13 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         self.input_dfs[0]['fecha_nacimiento'] = pd.to_datetime(self.input_dfs[0]['fecha_nacimiento'])
         self.input_dfs[0]['edad_acceso'] = self.input_dfs[0].apply(
             lambda func: func.fecha_curso.year - func.fecha_nacimiento.year, axis=1)
-        year_bcket_array = np.array([18, 20, 25, 30, 35, 40, 45, 50, 55, 60])
-        self.input_dfs[0]['edad_acceso'] = pd.cut(
-            self.input_dfs[0]['edad_acceso'], year_bcket_array, include_lowest=True)
+
         self.input_dfs[0].drop([keys.BIRTH_DATE_KEY, 'fecha_curso'], axis=1, inplace=True)
+
+        self.input_dfs[0]['distance'] = self.input_dfs[0]['municipio'].swifter.set_npartitions(
+            multiprocessing.cpu_count()).apply(lambda func: get_distance('CACERES', func))
+        self.input_dfs[0].drop([keys.TOWN_KEY, keys.PROVINCE_KEY], axis=1, inplace=True)
+        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0]['distance'] != -1]
 
         self.input_dfs[0][keys.DROP_OUT_KEY] = self.input_dfs[0][keys.DROP_OUT_KEY].apply(
             lambda func: 1 if func == 'S' else 0)
