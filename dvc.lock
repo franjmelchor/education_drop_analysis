@@ -135,8 +135,8 @@ stages:
       size: 1368
     outs:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 37502086be69cc7e61cbd4245f811e25
-      size: 251830
+      md5: b57f8cdaeefbae97c4570f81385642e9
+      size: 197542
   feat_sel_pol_personal_data:
     cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
@@ -275,8 +275,8 @@ stages:
       -c 1 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 37502086be69cc7e61cbd4245f811e25
-      size: 251830
+      md5: b57f8cdaeefbae97c4570f81385642e9
+      size: 197542
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
@@ -288,8 +288,8 @@ stages:
       size: 1368
     outs:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
-      md5: 40f4d34b4dcc72f6589be900d87154c0
-      size: 381429
+      md5: 0381e86592fa581f20c2d7f1be20d630
+      size: 298539
   feat_sel_pol_2nd_quad:
     cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
       -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"

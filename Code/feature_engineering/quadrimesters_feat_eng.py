@@ -260,6 +260,17 @@ class QuadrimestersFeatureEngineering(FeatureEngineering):
         log.info("new columns are :" + str(list(set(col_list_after) - set(col_list_before))))
         log.info("final columns are: " + str(col_list_after))
 
+        # from sklearn import preprocessing
+        # le = preprocessing.LabelEncoder()
+        # le.fit(analys_record_personal_access['becario'].astype('category').cat.categories)
+        # analys_record_personal_access['becario'] = le.transform(analys_record_personal_access['becario'].astype('category'))
+        #
+        # le = preprocessing.LabelEncoder()
+        # le.fit(analys_record_personal_access['des_acceso'].astype('category').cat.categories)
+        # analys_record_personal_access['des_acceso'] = le.transform(analys_record_personal_access['des_acceso'].astype('category'))
+        #
+        # analys_record_personal_access.drop(['expediente','cod_plan'], axis=1,inplace=True)
+
         self.output_df = analys_record_personal_access
 
 
@@ -278,7 +289,7 @@ def main():
         input_separator='|',
         output_separator='|',
         save_report_on_load=False,
-        save_report_on_save=True,
+        save_report_on_save=False,
         report_type=FeatureEngineering.ReportType.Standard,
     )
     feat_eng.execute()

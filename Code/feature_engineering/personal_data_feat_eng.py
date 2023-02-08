@@ -124,6 +124,7 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
 
         log.info("Feature Engineering of pr_record_personal_access data")
         log.debug("RecordPersonalAccessFeatureEngineering.process()")
+        log.info("initial columns are: " + str(self.input_dfs[0].columns))
 
         analys_columns = [keys.RECORD_KEY, keys.PLAN_CODE_KEY, keys.PLAN_DESCRIPTION_KEY, keys.OPEN_YEAR_PLAN_KEY,
                           keys.DROP_OUT_KEY, keys.ACCESS_CALL_KEY, keys.ACCESS_DESCRIPTION_KEY,
@@ -135,11 +136,13 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         dset = self.input_dfs[0].copy()
         pr_scholarship_per_year = self.input_dfs[1]
 
+        cols_before_names = self.input_dfs[0].columns
         cols_before = len(self.input_dfs[0].columns)
         self.input_dfs[0] = self.input_dfs[0][analys_columns]
         cols_after = len(self.input_dfs[0].columns)
         self.changes["delete columns unused to analysis"] = cols_before - cols_after
         log.info("final columns are: " + str(analys_columns))
+        log.info("deleted columns are: " + str(set(cols_before_names) - set(analys_columns)))
 
         null_values_before = self.input_dfs[0].isnull().sum().sum()
         self.input_dfs[0][keys.FINAL_ADMISION_NOTE_KEY] = self.input_dfs[0].apply(
