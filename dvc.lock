@@ -1,7 +1,8 @@
 schema: '2.0'
 stages:
   fetch_data_pol_scholarship_per_year:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Raw/Politecnica -becario
       por curso academico.xls" -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/scholarship.csv"
     deps:
@@ -13,7 +14,8 @@ stages:
       md5: 1c079440cee2bcc23facccdfba25d3bd
       size: 1078933
   fetch_data_pol_plan_subj_call:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Raw/Politecnica -plan asignatura
       convocatoria.xls" -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/subjects.csv"
     deps:
@@ -25,7 +27,8 @@ stages:
       md5: b99fe3b51dbfac03bc1cd5c8abc52207
       size: 28021726
   fetch_data_pol_personal_access:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
       -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Raw/Politecnica -datos
       de expediente,personales y de acceso.xls" -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/Interim/personal_data.csv"
     deps:
@@ -37,33 +40,44 @@ stages:
       md5: 51d3994409479e9a37819cd721447bd9
       size: 1027023
   fetch_data_pol_personal_data:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Raw/Politecnica
-      -datos de expediente,personales y de acceso.xls" -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
+      -datos de expediente,personales y de acceso.xls" -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/personal_data.csv"
     deps:
     - path: ../../../Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls
-      md5: 4839865c071e239743c8fda0cc750cb8
-      size: 1806336
+      md5: bf5e5bfbc15e97cbf9622afaebb2a109
+      size: 1867264
     outs:
     - path: ../../../Data/Interim/personal_data.csv
-      md5: 41f40fff66805830d23e878449185623
-      size: 1004452
+      md5: 51d3994409479e9a37819cd721447bd9
+      size: 1027023
+      isexec: true
   fetch_data_pol_subjects:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Raw/Politecnica
-      -plan asignatura convocatoria.xls" -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/subjects.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
+      -plan asignatura convocatoria.xls" -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/subjects.csv"
     deps:
     - path: ../../../Data/Raw/Politecnica -plan asignatura convocatoria.xls
-      md5: b2d237b00715ff4e952161a0ad0991eb
-      size: 46277632
+      md5: 7b74013f840e2cd6c73658ae0a7dfa6a
+      size: 49014272
     outs:
     - path: ../../../Data/Interim/subjects.csv
-      md5: 334498bfa9447c2cbd0998b719c7d8f0
-      size: 27782685
+      md5: b99fe3b51dbfac03bc1cd5c8abc52207
+      size: 28021726
+      isexec: true
   fetch_data_pol_scolarship:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Raw/Politecnica
-      -becario por curso academico.xls" -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/scholarship.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
+      -becario por curso academico.xls" -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/scholarship.csv"
     deps:
     - path: ../../../Data/Raw/Politecnica -becario por curso academico.xls
       md5: 7195c333a572c535a5a78e6880d8b502
@@ -72,44 +86,56 @@ stages:
     - path: ../../../Data/Interim/scholarship.csv
       md5: 1c079440cee2bcc23facccdfba25d3bd
       size: 1078933
+      isexec: true
   etl_pol_subjects:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/subjects.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/subjects.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
     deps:
     - path: ../../../../Data/Interim/subjects.csv
-      md5: 334498bfa9447c2cbd0998b719c7d8f0
-      size: 27782685
+      md5: b99fe3b51dbfac03bc1cd5c8abc52207
+      size: 28021726
     - path: ../../../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
     - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 779876747220618253f175c82396edad
-      size: 27594802
+      md5: 6e9713ae442ba01761d37b98956007fa
+      size: 27832849
+      isexec: true
   etl_pol_personal_data:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/personal_data.csv"
-      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/personal_data.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_personal_data.csv"
     deps:
     - path: ../../../../Data/Interim/personal_data.csv
-      md5: 41f40fff66805830d23e878449185623
-      size: 1004452
+      md5: 51d3994409479e9a37819cd721447bd9
+      size: 1027023
     - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 779876747220618253f175c82396edad
-      size: 27594802
+      md5: 6e9713ae442ba01761d37b98956007fa
+      size: 27832849
     - path: ../../../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
     - path: ../../../../Data/Processed/pr_personal_data.csv
-      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
-      size: 447369
+      md5: 39acf13da027425e8a01de6a593f62bc
+      size: 459976
+      isexec: true
   etl_pol_scolarship:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Interim/scholarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/scholarship.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
     deps:
     - path: ../../../../Data/Interim/scholarship.csv
       md5: 1c079440cee2bcc23facccdfba25d3bd
@@ -121,67 +147,90 @@ stages:
     - path: ../../../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
+      isexec: true
   feat_eng_pol_personal_data:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/personal_data_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_personal_data.csv"
-      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_engineering/personal_data_feat_eng.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_personal_data.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
     deps:
     - path: ../../Data/Processed/pr_personal_data.csv
-      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
-      size: 447369
+      md5: 39acf13da027425e8a01de6a593f62bc
+      size: 459976
+    - path: ../../Data/Processed/pr_scolarship.csv
+      md5: 95e81d20e4d6e6114f55ac892e84756c
+      size: 1065167
     - path: ../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: b57f8cdaeefbae97c4570f81385642e9
-      size: 197542
+      md5: 9e81027aff927720124aeffb6bf2293b
+      size: 243768
+      isexec: true
   feat_sel_pol_personal_data:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_selection/feat_sel.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
       -c 0 -q 0
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 37502086be69cc7e61cbd4245f811e25
-      size: 251830
+      md5: 7f33b7634de9d28929df26671a2210f4
+      size: 236121
     - path: ../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
-      md5: 06d20c25b1ac45bc0d496dc2f40c3a27
-      size: 232036
+    - path: 
+        ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
+      md5: 3969be96cf4c57240c554fda18c0175a
+      size: 218719
+      isexec: true
   analysis_pol_personal_data:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
-      -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
+      -i 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
       -c 0 -q 0 -mn "1st_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
       md5: b887e4e0216b5464dcc6aedc2403ab0d
       size: 291636
     - path: ../keys.py
       md5: 57fe24153e2ca1f7fad17b2cf642d8ee
       size: 1218
   analysis_pol_personal_data_hyp_tunning:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_personal_data_hyp_tunning.py
-      -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_personal_data_hyp_tunning.py
+      -i 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
       -c 0 -q 0 -mn "1st_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
       md5: b887e4e0216b5464dcc6aedc2403ab0d
       size: 291636
     - path: ../keys.py
       md5: 57fe24153e2ca1f7fad17b2cf642d8ee
       size: 1218
   analysis_pol_personal_data_ensemble:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_personal_data_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_personal_data_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/pred_analys_personal_data.csv"
       -c 0 -q 0 -mn "1st_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/personal_data/final_analys_personal_data.csv
       md5: 05a64562d13665763dd6db220b4449b4
       size: 301235
     - path: ../keys.py
@@ -192,108 +241,137 @@ stages:
       md5: ae6450b746a252d99732240ad1ca3e5a
       size: 305789
   feat_eng_pol_1st_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
-      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"  "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv"
       -c 1 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 37502086be69cc7e61cbd4245f811e25
-      size: 251830
+      md5: 9e81027aff927720124aeffb6bf2293b
+      size: 243768
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 779876747220618253f175c82396edad
-      size: 27594802
+      md5: 6e9713ae442ba01761d37b98956007fa
+      size: 27832849
     - path: ../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv
-      md5: 4a03b6b0e3d21e07657a699cb31bda2a
-      size: 365881
+      md5: d7cf741edbb5d1d7fe0992a44ecad031
+      size: 346603
   feat_sel_pol_1st_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_selection/feat_sel.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/analys_personal_data.csv
-      md5: 4a03b6b0e3d21e07657a699cb31bda2a
-      size: 365881
+      md5: d7cf741edbb5d1d7fe0992a44ecad031
+      size: 346603
     - path: ../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
-      md5: 8a8be4f01eccc7863784ba3fcdb00cb5
-      size: 327452
+    - path: 
+        ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
+      md5: 319aefc9051e6de921a9b5ed89b58412
+      size: 345036
+      isexec: true
   analys_pol_1st_quad:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
-      -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_comparison.py
+      -i 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 1 -mn "2nd_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
       md5: 6da6a8345467fda612d07c79673b198f
       size: 355014
     - path: ../keys.py
       md5: 57fe24153e2ca1f7fad17b2cf642d8ee
       size: 1218
   analysis_pol_1st_quad_hyp_tunning:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_hyp_tunning.py
-      -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_hyp_tunning.py
+      -i 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 1 -mn "2nd_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
       md5: 6da6a8345467fda612d07c79673b198f
       size: 355014
     - path: ../keys.py
       md5: 57fe24153e2ca1f7fad17b2cf642d8ee
       size: 1218
   analysis_pol_1st_quad_ensemble:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv"
       -c 1 -q 1 -mn "2nd_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/1st_quadrimester/final_analys_personal_data.csv
       md5: f3837f4e4f9fd5867bc63bcab5deeadb
       size: 484861
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/1st_quadrimester/pred_analys_personal_data.csv
       md5: 007be231b182a0a2986d839631da5a2e
       size: 489388
   feat_eng_pol_2nd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"  "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"  "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
+    cmd: python3 
+      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
+      -o 
+      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
       -c 1 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: b57f8cdaeefbae97c4570f81385642e9
-      size: 197542
+      md5: 9e81027aff927720124aeffb6bf2293b
+      size: 243768
     - path: ../../Data/Processed/pr_scolarship.csv
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
     - path: ../../Data/Processed/pr_subjects.csv
-      md5: 779876747220618253f175c82396edad
-      size: 27594802
+      md5: 6e9713ae442ba01761d37b98956007fa
+      size: 27832849
     - path: ../keys.py
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
-      md5: 0381e86592fa581f20c2d7f1be20d630
-      size: 298539
+      md5: f274d18ca2f62ab68a6ddb7714228c10
+      size: 361014
+      isexec: true
   feat_sel_pol_2nd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv"
       -c 1 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
@@ -303,31 +381,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
       md5: d479f96314429b8f16ded71d928749ac
       size: 360161
   analys_pol_2nd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv"
       -c 1 -q 2 -mn "3rd_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/2nd_quadrimester/final_analys_personal_data.csv
       md5: 0e862f82ed762044a64cb5ba36875d85
       size: 488907
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/2nd_quadrimester/pred_analys_personal_data.csv
       md5: 8070b34d5111f326971a5b67db1fb93c
       size: 493421
   feat_eng_pol_3rd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv"
       -c 2 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
@@ -347,9 +434,12 @@ stages:
       md5: 626f6cdab4cd842d486a9874080aa0c1
       size: 316135
   feat_sel_pol_3rd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv"
       -c 2 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv
@@ -359,31 +449,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
       md5: 87650f86b14665fbc23f6fd369dcbdf9
       size: 242850
   analys_pol_3rd_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv"
       -c 2 -q 1 -mn "4th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/3rd_quadrimester/final_analys_personal_data.csv
       md5: bc9087db58f27adf330a3a198f71a2f1
       size: 331246
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/3rd_quadrimester/pred_analys_personal_data.csv
       md5: adf2bf633e851ba65da51d607b9ed67e
       size: 334618
   feat_eng_pol_4th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv"
       -c 2 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/3rd_quadrimester/analys_personal_data.csv
@@ -403,9 +502,12 @@ stages:
       md5: 3cf573fc883c934db074fd67c85260b5
       size: 321136
   feat_sel_pol_4th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv"
       -c 2 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv
@@ -415,31 +517,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
       md5: 6caf0b76bb71b6bc966da23fe6be6d79
       size: 245908
   analys_pol_4th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv"
       -c 2 -q 2 -mn "5th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/4th_quadrimester/final_analys_personal_data.csv
       md5: eb405b4b14ce3fa1b5ee338be589c80f
       size: 333806
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/4th_quadrimester/pred_analys_personal_data.csv
       md5: 14b74c985a011ee5e1282d3e55c2193c
       size: 337172
   feat_eng_pol_5th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv"
       -c 3 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/4th_quadrimester/analys_personal_data.csv
@@ -459,9 +570,12 @@ stages:
       md5: 4c038f1b84ecf15d5556419221b0f475
       size: 278276
   feat_sel_pol_5th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv"
       -c 3 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv
@@ -471,31 +585,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
       md5: a9bb5e1609712b6bb137f250d1266e13
       size: 236619
   analys_pol_5th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv"
       -c 3 -q 1 -mn "6th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/5th_quadrimester/final_analys_personal_data.csv
       md5: f8b9545b6a71437167e140b31af31db1
       size: 289515
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/5th_quadrimester/pred_analys_personal_data.csv
       md5: 8a5e1d27bccfae4dcc1881d7b0f5c3df
       size: 292417
   feat_eng_pol_6th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv"
       -c 3 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/5th_quadrimester/analys_personal_data.csv
@@ -515,9 +638,12 @@ stages:
       md5: 832956ef89264850391959756bbb00b3
       size: 277821
   feat_sel_pol_6th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv"
       -c 3 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv
@@ -527,31 +653,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
       md5: 6d6f6625be9c9d21c91b6f0dda695a60
       size: 263166
   analys_pol_6th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv"
       -c 3 -q 2 -mn "7th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/6th_quadrimester/final_analys_personal_data.csv
       md5: 621708853a89366acc76287844c10c72
       size: 309857
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/6th_quadrimester/pred_analys_personal_data.csv
       md5: 265156d9a5006296c6a8a69d588f8f58
       size: 312743
   feat_eng_pol_7th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv"
       -c 4 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/6th_quadrimester/analys_personal_data.csv
@@ -571,9 +706,12 @@ stages:
       md5: 34683aaa9f1e1f0a909dfdade35204a2
       size: 250816
   feat_sel_pol_7th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv"
       -c 4 -q 1
     deps:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv
@@ -583,31 +721,40 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
       md5: af50da1f6b1457b76dde91e2ff929303
       size: 237718
   analys_pol_7th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv"
       -c 4 -q 1 -mn "8th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/7th_quadrimester/final_analys_personal_data.csv
       md5: 5cf839cbca6d9144198e21be903ec66a
       size: 263206
     - path: ../keys.py
       md5: 0206beaa5e0afe9d2ea50933c2419f6e
       size: 1334
     outs:
-    - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/7th_quadrimester/pred_analys_personal_data.csv
       md5: 5285517ff7b664d2846cf1a026b43cf0
       size: 265800
   feat_eng_pol_8th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_engineering/quadrimesters_feat_eng.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_subjects.csv"
       "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/Processed/pr_scolarship.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv"
       -c 4 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/7th_quadrimester/analys_personal_data.csv
@@ -627,9 +774,12 @@ stages:
       md5: 333563507d2e2a1bc22ec4fee3d075bd
       size: 248997
   feat_sel_pol_8th_quad:
-    cmd: python3 /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
-      -i "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv"
-      -o "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/i3uex/education_drop_clustering/Code/feature_selection/feat_sel.py
+      -i 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/i3uex/education_drop_clustering/Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv"
       -c 4 -q 2
     deps:
     - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/analys_personal_data.csv
@@ -639,22 +789,28 @@ stages:
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
     outs:
-    - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
       md5: c15211ebc8a1045012ba03dc0a2750d9
       size: 235958
   analys_pol_8th_quad:
-    cmd: python3 /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
-      -i "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv"
-      -o "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/pred_analys_personal_data.csv"
+    cmd: python3 
+      /home/fran/Escritorio/Repositorios_MUOC/TFM/Code/analysis_and_modeling/models_quadrimesters_ensemble.py
+      -i 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv"
+      -o 
+      "/home/fran/Escritorio/Repositorios_MUOC/TFM/Data/For_analysis_and_modeling/8th_quadrimester/pred_analys_personal_data.csv"
       -c 4 -q 2 -mn "9th_model"
     deps:
-    - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/8th_quadrimester/final_analys_personal_data.csv
       md5: a835ab1af4cc9ac1831461e9979dbc91
       size: 254103
     - path: ../keys.py
       md5: 57fe24153e2ca1f7fad17b2cf642d8ee
       size: 1218
     outs:
-    - path: ../../Data/For_analysis_and_modeling/8th_quadrimester/pred_analys_personal_data.csv
+    - path: 
+        ../../Data/For_analysis_and_modeling/8th_quadrimester/pred_analys_personal_data.csv
       md5: 6de5ffbcf75d73ee2c825fc1383cd32e
       size: 236387

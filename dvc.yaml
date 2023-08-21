@@ -73,6 +73,7 @@ stages:
       -o "${dvc_root}${data.analys_data.personal_data.pol}"
     deps:
       - ${dvc_root}${data.processed_data.pol.personal_data}
+      - ${dvc_root}${data.processed_data.pol.scholarship}
       - ${dvc_root}/Code/keys.py
     outs:
       - ${dvc_root}${data.analys_data.personal_data.pol}
@@ -133,20 +134,6 @@ stages:
     outs:
       - ${dvc_root}${data.final_analys_data.1st_quad.pol}
     wdir: ${dvc_root}${wdir.feat_sel}
-#  analysis_pol_1st_quad_ensemble:
-#    cmd: >-
-#      python3 ${dvc_root}${scripts.analys_quadrimesters_ensemble}
-#      -i "${dvc_root}${data.final_analys_data.1st_quad.pol}"
-#      -o "${dvc_root}${data.analys_data.1st_quad.pol}"
-#      -c 1
-#      -q 1
-#      -mn "2nd_model"
-#    deps:
-#      - ${dvc_root}${data.final_analys_data.1st_quad.pol}
-#      - ${dvc_root}/Code/keys.py
-#    outs:
-#      - ${dvc_root}${data.analys_data.1st_quad.pol}
-#    wdir: ${dvc_root}${wdir.analys}
   feat_eng_pol_2nd_quad:
     cmd: >-
       python3 ${dvc_root}${scripts.feat_eng.quadrimesters_script}
