@@ -19,11 +19,12 @@ pr_scholarship_per_year: pd.DataFrame
 
 def get_distance(city_origin, city_target):
     from geopy.geocoders import Nominatim
+    from geopy.extra.rate_limiter import RateLimiter
     import requests
     import json
     geolocator = Nominatim(user_agent='edrop_cities')
-    location_origin = geolocator.geocode(city_origin)
-    location_target = geolocator.geocode(city_target)
+    location_origin = RateLimiter(geolocator.geocode, min_delay_seconds=1)(city_origin)
+    location_target = RateLimiter(geolocator.geocode, min_delay_seconds=1)(city_target)
     r = requests.get(f"http://router.project-osrm.org/route/v1/car/{location_origin.longitude},"
                      f"{location_origin.latitude};{location_target.longitude},{location_target.latitude}?overview=false""")
     routes = json.loads(r.content)
@@ -209,7 +210,7 @@ def main():
         output_separator='|',
         report_type=FeatureEngineering.ReportType.Standard,
         save_report_on_load=False,
-        save_report_on_save=True
+        save_report_on_save=False
     )
     feature_eng.execute()
 

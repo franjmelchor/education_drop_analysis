@@ -13,5 +13,6 @@ Code/__pycache__/
 *.csv
 *.html
 /PAT.txt
+*.pyc
 
 
