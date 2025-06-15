@@ -1,153 +1,103 @@
 vars:
-  - params.json
+  - params.yaml
 
 stages:
+
   fetch_data_pol_subjects:
     cmd: >-
-      python3 ${dvc_root}${scripts.fetch_data}
-      -i "${dvc_root}${data.raw_data.pol.subjects}"
-      -o "${dvc_root}${data.interim_data.pol.subjects}"
+      python ${scripts.fetch_data}
+      -i "${data.raw_data.pol.subjects}"
+      -o "${data.interim_data.pol.subjects}"
     deps:
-      - ${dvc_root}${data.raw_data.pol.subjects}
+      - ${scripts.fetch_data}
+      - ${data.raw_data.pol.subjects}
     outs:
-      - ${dvc_root}${data.interim_data.pol.subjects}
-    wdir: ${dvc_root}${wdir.fetch_data}
+      - ${data.interim_data.pol.subjects}
+
   fetch_data_pol_scolarship:
     cmd: >-
-      python3 ${dvc_root}${scripts.fetch_data}
-      -i "${dvc_root}${data.raw_data.pol.scholarship}"
-      -o "${dvc_root}${data.interim_data.pol.scholarship}"
+      python ${scripts.fetch_data}
+      -i "${data.raw_data.pol.scholarship}"
+      -o "${data.interim_data.pol.scholarship}"
     deps:
-      - ${dvc_root}${data.raw_data.pol.scholarship}
+      - ${scripts.fetch_data}
+      - ${data.raw_data.pol.scholarship}
     outs:
-      - ${dvc_root}${data.interim_data.pol.scholarship}
-    wdir: ${dvc_root}${wdir.fetch_data}
+      - ${data.interim_data.pol.scholarship}
+
   fetch_data_pol_personal_data:
     cmd: >-
-      python3 ${dvc_root}${scripts.fetch_data}
-      -i "${dvc_root}${data.raw_data.pol.personal_data}"
-      -o "${dvc_root}${data.interim_data.pol.personal_data}"
+      python ${scripts.fetch_data}
+      -i "${data.raw_data.pol.personal_data}"
+      -o "${data.interim_data.pol.personal_data}"
     deps:
-      - ${dvc_root}${data.raw_data.pol.personal_data}
+      - ${scripts.fetch_data}
+      - ${data.raw_data.pol.personal_data}
     outs:
-      - ${dvc_root}${data.interim_data.pol.personal_data}
-    wdir: ${dvc_root}${wdir.fetch_data}
+      - ${data.interim_data.pol.personal_data}
+
   etl_pol_subjects:
     cmd: >-
-      python3 ${dvc_root}${scripts.etl.scolarship_&_subjects}
-      -i "${dvc_root}${data.interim_data.pol.subjects}"
-      -o "${dvc_root}${data.processed_data.pol.subjects}"
+      python "${scripts.etl.scolarship_&_subjects}"
+      -i "${data.interim_data.pol.subjects}"
+      -o "${data.processed_data.pol.subjects}"
     deps:
-      - ${dvc_root}${data.interim_data.pol.subjects}
-      - ${dvc_root}/Code/keys.py
+      - ${scripts.etl.scolarship_&_subjects}
+      - ${data.interim_data.pol.subjects}
+      - Code/keys.py
     outs:
-      - ${dvc_root}${data.processed_data.pol.subjects}
-    wdir: ${dvc_root}${wdir.etl.scolarship_&_subjects}
+      - ${data.processed_data.pol.subjects}
+
   etl_pol_scolarship:
     cmd: >-
-      python3 ${dvc_root}${scripts.etl.scolarship_&_subjects}
-      -i "${dvc_root}${data.interim_data.pol.scholarship}"
-      -o "${dvc_root}${data.processed_data.pol.scholarship}"
+      python "${scripts.etl.scolarship_&_subjects}"
+      -i "${data.interim_data.pol.scholarship}"
+      -o "${data.processed_data.pol.scholarship}"
     deps:
-      - ${dvc_root}${data.interim_data.pol.scholarship}
-      - ${dvc_root}/Code/keys.py
+      - ${scripts.etl.scolarship_&_subjects}
+      - ${data.interim_data.pol.scholarship}
+      - Code/keys.py
     outs:
-      - ${dvc_root}${data.processed_data.pol.scholarship}
-    wdir: ${dvc_root}${wdir.etl.scolarship_&_subjects}
+      - ${data.processed_data.pol.scholarship}
+
   etl_pol_personal_data:
     cmd: >-
-      python3 ${dvc_root}${scripts.etl.personal_data}
-      -i "${dvc_root}${data.interim_data.pol.personal_data}" "${dvc_root}${data.processed_data.pol.subjects}"
-      -o "${dvc_root}${data.processed_data.pol.personal_data}"
+      python ${scripts.etl.personal_data}
+      -i "${data.interim_data.pol.personal_data}" "${data.processed_data.pol.subjects}"
+      -o "${data.processed_data.pol.personal_data}"
     deps:
-      - ${dvc_root}${data.interim_data.pol.personal_data}
-      - ${dvc_root}${data.processed_data.pol.subjects}
-      - ${dvc_root}/Code/keys.py
+      - ${scripts.etl.personal_data}
+      - ${data.interim_data.pol.personal_data}
+      - ${data.processed_data.pol.subjects}
+      - Code/keys.py
     outs:
-      - ${dvc_root}${data.processed_data.pol.personal_data}
-    wdir: ${dvc_root}${wdir.etl.personal_data}
+      - ${data.processed_data.pol.personal_data}
+
   feat_eng_pol_personal_data:
     cmd: >-
-      python3 ${dvc_root}${scripts.feat_eng.personal_data_script}
-      -i "${dvc_root}${data.processed_data.pol.personal_data}" "${dvc_root}${data.processed_data.pol.scholarship}"
-      -o "${dvc_root}${data.analys_data.personal_data.pol}"
+      python ${scripts.feat_eng.personal_data_script}
+      -i "${data.processed_data.pol.personal_data}" "${data.processed_data.pol.scholarship}"
+      -o "${data.analys_data.personal_data.pol}"
     deps:
-      - ${dvc_root}${data.processed_data.pol.personal_data}
-      - ${dvc_root}${data.processed_data.pol.scholarship}
-      - ${dvc_root}/Code/keys.py
+      - ${scripts.feat_eng.personal_data_script}
+      - ${data.processed_data.pol.personal_data}
+      - ${data.processed_data.pol.scholarship}
+      - Code/keys.py
     outs:
-      - ${dvc_root}${data.analys_data.personal_data.pol}
-    wdir: ${dvc_root}${wdir.feat_eng.personal_data_script}
-  feat_sel_pol_personal_data:
-    cmd: >-
-      python3 ${dvc_root}${scripts.feat_sel}
-      -i "${dvc_root}${data.analys_data.personal_data.pol}"
-      -o "${dvc_root}${data.final_analys_data.personal_data.pol}"
-      -c 0
-      -q 0
-    deps:
-      - ${dvc_root}${data.analys_data.personal_data.pol}
-      - ${dvc_root}/Code/keys.py
-    outs:
-      - ${dvc_root}${data.final_analys_data.personal_data.pol}
-    wdir: ${dvc_root}${wdir.feat_sel}
-#  analysis_pol_personal_data_ensemble:
-#    cmd: >-
-#      python3 ${dvc_root}${scripts.analys_personal_data_ensemble}
-#      -i "${dvc_root}${data.final_analys_data.personal_data.pol}"
-#      -o "${dvc_root}${data.analys_data.personal_data.pol}"
-#      -c 0
-#      -q 0
-#      -mn "1st_model"
-#    deps:
-#      - ${dvc_root}${data.final_analys_data.personal_data.pol}
-#      - ${dvc_root}/Code/keys.py
-#    outs:
-#      - ${dvc_root}${data.analys_data.personal_data.pol}
-#    wdir: ${dvc_root}${wdir.analys}
-  feat_eng_pol_1st_quad:
-    cmd: >-
-      python3 ${dvc_root}${scripts.feat_eng.quadrimesters_script}
-      -i "${dvc_root}${data.analys_data.personal_data.pol}" "${dvc_root}${data.processed_data.pol.subjects}" 
-      "${dvc_root}${data.processed_data.pol.scholarship}"
-      -o "${dvc_root}${data.analys_data.1st_quad.pol}"
-      -c 1
-      -q 1
-    deps:
-      - ${dvc_root}${data.analys_data.personal_data.pol}
-      - ${dvc_root}${data.processed_data.pol.subjects}
-      - ${dvc_root}${data.processed_data.pol.scholarship}
-      - ${dvc_root}/Code/keys.py
-    outs:
-      - ${dvc_root}${data.analys_data.1st_quad.pol}
-    wdir: ${dvc_root}${wdir.feat_eng.quadrimesters_script}
-  feat_sel_pol_1st_quad:
-    cmd: >-
-      python3 ${dvc_root}${scripts.feat_sel}
-      -i "${dvc_root}${data.analys_data.1st_quad.pol}"
-      -o "${dvc_root}${data.final_analys_data.1st_quad.pol}"
-      -c 1
-      -q 1
-    deps:
-      - ${dvc_root}${data.analys_data.1st_quad.pol}
-      - ${dvc_root}/Code/keys.py
-    outs:
-      - ${dvc_root}${data.final_analys_data.1st_quad.pol}
-    wdir: ${dvc_root}${wdir.feat_sel}
+      - ${data.analys_data.personal_data.pol}
+
   feat_eng_pol_2nd_quad:
     cmd: >-
-      python3 ${dvc_root}${scripts.feat_eng.quadrimesters_script}
-      -i "${dvc_root}${data.analys_data.personal_data.pol}" 
-      "${dvc_root}${data.processed_data.pol.subjects}" 
-      "${dvc_root}${data.processed_data.pol.scholarship}"
-      -o "${dvc_root}${data.analys_data.2nd_quad.pol}"
+      python ${scripts.feat_eng.quadrimesters_script}
+      -i "${data.analys_data.personal_data.pol}" "${data.processed_data.pol.subjects}" "${data.processed_data.pol.scholarship}"
+      -o "${data.analys_data.2nd_quad.pol}"
       -c 1
       -q 2
     deps:
-      - ${dvc_root}${data.analys_data.personal_data.pol}
-      - ${dvc_root}${data.processed_data.pol.subjects}
-      - ${dvc_root}${data.processed_data.pol.scholarship}
-      - ${dvc_root}/Code/keys.py
+      - ${scripts.feat_eng.quadrimesters_script}
+      - ${data.analys_data.personal_data.pol}
+      - ${data.processed_data.pol.subjects}
+      - ${data.processed_data.pol.scholarship}
+      - Code/keys.py
     outs:
-      - ${dvc_root}${data.analys_data.2nd_quad.pol}
-    wdir: ${dvc_root}${wdir.feat_eng.quadrimesters_script}
+      - ${data.analys_data.2nd_quad.pol}

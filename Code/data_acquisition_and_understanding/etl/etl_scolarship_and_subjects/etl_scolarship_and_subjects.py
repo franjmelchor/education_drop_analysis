@@ -1,6 +1,8 @@
 import logging
 from apitep_utils import ETL
-import keys
+import sys
+import os
+sys.path.append(os.path.relpath('./'))
 from apitep_utils import ArgumentParserHelper
 import argparse
 import sys
@@ -8,7 +10,7 @@ import sys
 print(sys.path)
 log = logging.getLogger(__name__)
 
-
+PLAN_DESCRIPTION_KEY = "des_plan"
 class ScholarshipPerYearAndPlanSubjCallETL(ETL):
 
     def parse_arguments(self):
@@ -60,7 +62,7 @@ class ScholarshipPerYearAndPlanSubjCallETL(ETL):
                        'MÁSTER EN COMPUTACIÓN GRID Y PARALELISMO']
 
         rows_before = len(self.input_dfs[0].index)
-        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][keys.PLAN_DESCRIPTION_KEY].isin(old_degrees) == False]
+        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][PLAN_DESCRIPTION_KEY].isin(old_degrees) == False]
         rows_after = len(self.input_dfs[0].index)
         self.changes["delete data of old degrees"] = rows_before - rows_after
 

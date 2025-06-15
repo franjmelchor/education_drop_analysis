@@ -40,136 +40,180 @@ stages:
       md5: 51d3994409479e9a37819cd721447bd9
       size: 1027023
   fetch_data_pol_personal_data:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
-      -datos de expediente,personales y de acceso.xls" -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/personal_data.csv"
+    cmd: python Code/data_acquisition_and_understanding/fetch_data/fetch_data.py -i
+      "Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls" -o "Data/Interim/personal_data.csv"
     deps:
-    - path: ../../../Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls
-      md5: bf5e5bfbc15e97cbf9622afaebb2a109
-      size: 1867264
+    - path: Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      hash: md5
+      md5: 7e8629fa09488776b43e01fcbcc4f3d4
+      size: 1206
+      isexec: true
+    - path: Data/Raw/Politecnica -datos de expediente,personales y de acceso.xls
+      hash: md5
+      md5: 7b3840c537f7fb65bb38d3a623cf8e5e
+      size: 1806336
+      isexec: true
     outs:
-    - path: ../../../Data/Interim/personal_data.csv
-      md5: 51d3994409479e9a37819cd721447bd9
-      size: 1027023
+    - path: Data/Interim/personal_data.csv
+      hash: md5
+      md5: 41f40fff66805830d23e878449185623
+      size: 1004452
       isexec: true
   fetch_data_pol_subjects:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
-      -plan asignatura convocatoria.xls" -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/subjects.csv"
+    cmd: python Code/data_acquisition_and_understanding/fetch_data/fetch_data.py -i
+      "Data/Raw/Politecnica -plan asignatura convocatoria.xls" -o "Data/Interim/subjects.csv"
     deps:
-    - path: ../../../Data/Raw/Politecnica -plan asignatura convocatoria.xls
-      md5: 7b74013f840e2cd6c73658ae0a7dfa6a
-      size: 49014272
+    - path: Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      hash: md5
+      md5: 7e8629fa09488776b43e01fcbcc4f3d4
+      size: 1206
+      isexec: true
+    - path: Data/Raw/Politecnica -plan asignatura convocatoria.xls
+      hash: md5
+      md5: 15d0e8c7fea472fd20a7c735fe7b153e
+      size: 46277632
+      isexec: true
     outs:
-    - path: ../../../Data/Interim/subjects.csv
-      md5: b99fe3b51dbfac03bc1cd5c8abc52207
-      size: 28021726
+    - path: Data/Interim/subjects.csv
+      hash: md5
+      md5: 334498bfa9447c2cbd0998b719c7d8f0
+      size: 27782685
       isexec: true
   fetch_data_pol_scolarship:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Raw/Politecnica
-      -becario por curso academico.xls" -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/scholarship.csv"
+    cmd: python Code/data_acquisition_and_understanding/fetch_data/fetch_data.py -i
+      "Data/Raw/Politecnica -becario por curso academico.xls" -o "Data/Interim/scholarship.csv"
     deps:
-    - path: ../../../Data/Raw/Politecnica -becario por curso academico.xls
-      md5: 7195c333a572c535a5a78e6880d8b502
+    - path: Code/data_acquisition_and_understanding/fetch_data/fetch_data.py
+      hash: md5
+      md5: 7e8629fa09488776b43e01fcbcc4f3d4
+      size: 1206
+      isexec: true
+    - path: Data/Raw/Politecnica -becario por curso academico.xls
+      hash: md5
+      md5: 3d41c1a9b1c53be0ad3db7d0e0f1ad93
       size: 1494528
+      isexec: true
     outs:
-    - path: ../../../Data/Interim/scholarship.csv
+    - path: Data/Interim/scholarship.csv
+      hash: md5
       md5: 1c079440cee2bcc23facccdfba25d3bd
       size: 1078933
       isexec: true
   etl_pol_subjects:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/subjects.csv"
-      -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
+    cmd: python 
+      "Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py"
+      -i "Data/Interim/subjects.csv" -o "Data/Processed/pr_subjects.csv"
     deps:
-    - path: ../../../../Data/Interim/subjects.csv
-      md5: b99fe3b51dbfac03bc1cd5c8abc52207
-      size: 28021726
-    - path: ../../../keys.py
+    - path: 
+        Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
+      hash: md5
+      md5: 2f77fd677860f16edeba6e73b02ce7d2
+      size: 3517
+      isexec: true
+    - path: Code/keys.py
+      hash: md5
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
+      isexec: true
+    - path: Data/Interim/subjects.csv
+      hash: md5
+      md5: 334498bfa9447c2cbd0998b719c7d8f0
+      size: 27782685
+      isexec: true
     outs:
-    - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
+    - path: Data/Processed/pr_subjects.csv
+      hash: md5
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
       isexec: true
   etl_pol_personal_data:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/personal_data.csv"
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
-      -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_personal_data.csv"
+    cmd: python 
+      Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
+      -i "Data/Interim/personal_data.csv" "Data/Processed/pr_subjects.csv" -o "Data/Processed/pr_personal_data.csv"
     deps:
-    - path: ../../../../Data/Interim/personal_data.csv
-      md5: 51d3994409479e9a37819cd721447bd9
-      size: 1027023
-    - path: ../../../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
-    - path: ../../../keys.py
+    - path: 
+        Code/data_acquisition_and_understanding/etl/etl_personal_data/etl_personal_data.py
+      hash: md5
+      md5: 0f34f5f75a5255bcfb9955b5e01ac15c
+      size: 4832
+      isexec: true
+    - path: Code/keys.py
+      hash: md5
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
+      isexec: true
+    - path: Data/Interim/personal_data.csv
+      hash: md5
+      md5: 41f40fff66805830d23e878449185623
+      size: 1004452
+      isexec: true
+    - path: Data/Processed/pr_subjects.csv
+      hash: md5
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
+      isexec: true
     outs:
-    - path: ../../../../Data/Processed/pr_personal_data.csv
-      md5: 39acf13da027425e8a01de6a593f62bc
-      size: 459976
+    - path: Data/Processed/pr_personal_data.csv
+      hash: md5
+      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
+      size: 447369
       isexec: true
   etl_pol_scolarship:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Interim/scholarship.csv"
-      -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
+    cmd: python 
+      "Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py"
+      -i "Data/Interim/scholarship.csv" -o "Data/Processed/pr_scolarship.csv"
     deps:
-    - path: ../../../../Data/Interim/scholarship.csv
-      md5: 1c079440cee2bcc23facccdfba25d3bd
-      size: 1078933
-    - path: ../../../keys.py
+    - path: 
+        Code/data_acquisition_and_understanding/etl/etl_scolarship_and_subjects/etl_scolarship_and_subjects.py
+      hash: md5
+      md5: 2f77fd677860f16edeba6e73b02ce7d2
+      size: 3517
+      isexec: true
+    - path: Code/keys.py
+      hash: md5
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
+      isexec: true
+    - path: Data/Interim/scholarship.csv
+      hash: md5
+      md5: 1c079440cee2bcc23facccdfba25d3bd
+      size: 1078933
+      isexec: true
     outs:
-    - path: ../../../../Data/Processed/pr_scolarship.csv
+    - path: Data/Processed/pr_scolarship.csv
+      hash: md5
       md5: 95e81d20e4d6e6114f55ac892e84756c
       size: 1065167
       isexec: true
   feat_eng_pol_personal_data:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_engineering/personal_data_feat_eng.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_personal_data.csv"
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
-      -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+    cmd: python Code/feature_engineering/personal_data_feat_eng.py -i "Data/Processed/pr_personal_data.csv"
+      "Data/Processed/pr_scolarship.csv" -o "Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
     deps:
-    - path: ../../Data/Processed/pr_personal_data.csv
-      md5: 39acf13da027425e8a01de6a593f62bc
-      size: 459976
-    - path: ../../Data/Processed/pr_scolarship.csv
-      md5: 95e81d20e4d6e6114f55ac892e84756c
-      size: 1065167
-    - path: ../keys.py
+    - path: Code/feature_engineering/personal_data_feat_eng.py
+      hash: md5
+      md5: fd7918a98a055957f958a2534e626a25
+      size: 9918
+      isexec: true
+    - path: Code/keys.py
+      hash: md5
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
+      isexec: true
+    - path: Data/Processed/pr_personal_data.csv
+      hash: md5
+      md5: 44c2b5be7d9d1f1e51b347d6f861f9ee
+      size: 447369
+      isexec: true
+    - path: Data/Processed/pr_scolarship.csv
+      hash: md5
+      md5: 95e81d20e4d6e6114f55ac892e84756c
+      size: 1065167
+      isexec: true
     outs:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 9e81027aff927720124aeffb6bf2293b
-      size: 243768
+    - path: Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
+      hash: md5
+      md5: 6e43d5e546dfce5f7b588bc495e850a2
+      size: 238195
       isexec: true
   feat_sel_pol_personal_data:
     cmd: python3 
@@ -338,32 +382,40 @@ stages:
       md5: 007be231b182a0a2986d839631da5a2e
       size: 489388
   feat_eng_pol_2nd_quad:
-    cmd: python3 
-      /mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Code/feature_engineering/quadrimesters_feat_eng.py
-      -i 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_subjects.csv"
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/Processed/pr_scolarship.csv"
-      -o 
-      "/mnt/c/Users/franj/Desktop/Desktop/PAI_UEX_Repositorios/education_drop_analysis/Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
+    cmd: python Code/feature_engineering/quadrimesters_feat_eng.py -i "Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv"
+      "Data/Processed/pr_subjects.csv" "Data/Processed/pr_scolarship.csv" -o "Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv"
       -c 1 -q 2
     deps:
-    - path: ../../Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
-      md5: 9e81027aff927720124aeffb6bf2293b
-      size: 243768
-    - path: ../../Data/Processed/pr_scolarship.csv
-      md5: 95e81d20e4d6e6114f55ac892e84756c
-      size: 1065167
-    - path: ../../Data/Processed/pr_subjects.csv
-      md5: 6e9713ae442ba01761d37b98956007fa
-      size: 27832849
-    - path: ../keys.py
+    - path: Code/feature_engineering/quadrimesters_feat_eng.py
+      hash: md5
+      md5: a0f5e7caa3abf28f46ef5e9ae8d5e093
+      size: 12636
+      isexec: true
+    - path: Code/keys.py
+      hash: md5
       md5: 42b58b5f0c79ab80ca416d97e0a1675d
       size: 1368
+      isexec: true
+    - path: Data/For_analysis_and_modeling/personal_data/analys_personal_data.csv
+      hash: md5
+      md5: 6e43d5e546dfce5f7b588bc495e850a2
+      size: 238195
+      isexec: true
+    - path: Data/Processed/pr_scolarship.csv
+      hash: md5
+      md5: 95e81d20e4d6e6114f55ac892e84756c
+      size: 1065167
+      isexec: true
+    - path: Data/Processed/pr_subjects.csv
+      hash: md5
+      md5: 779876747220618253f175c82396edad
+      size: 27594802
+      isexec: true
     outs:
-    - path: ../../Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
-      md5: f274d18ca2f62ab68a6ddb7714228c10
-      size: 361014
+    - path: Data/For_analysis_and_modeling/2nd_quadrimester/analys_personal_data.csv
+      hash: md5
+      md5: 23e84b57e736b25ab450311ba3d8e0d7
+      size: 358964
       isexec: true
   feat_sel_pol_2nd_quad:
     cmd: python3 

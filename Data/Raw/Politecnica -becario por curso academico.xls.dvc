@@ -1,4 +1,6 @@
 outs:
-- md5: 7195c333a572c535a5a78e6880d8b502
+- md5: 3d41c1a9b1c53be0ad3db7d0e0f1ad93
   size: 1494528
   path: Politecnica -becario por curso academico.xls
+  isexec: true
+  hash: md5

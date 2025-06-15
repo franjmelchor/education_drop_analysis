@@ -1,14 +1,54 @@
+# CSV Columns Keys
+PLAN_DESCRIPTION_KEY = "des_plan"
+RECORD_KEY = "expediente"
+PLAN_CODE_KEY = "cod_plan"
+PLAN_CODE_RECORD_KEY = "cod_plan_exp"
+AGE_KEY = "edad_acceso"
+BIRTH_DATE_KEY = "fecha_nacimiento"
+BIRTH_YEAR_KEY = "anio_nacimiento"
+BIRTH_YEAR_INTERVAL_KEY = "anio_nacimiento_interval"
+OPEN_YEAR_PLAN_KEY = "anio_apertura_expediente"
+OPEN_DATE_PLAN_KEY = "fecha_apertura_expediente"
+ACCESS_CALL_KEY = "convocatoria_acceso"
+ACCESS_DESCRIPTION_KEY = "des_acceso"
+GENDER_KEY = "sexo"
+PROVINCE_KEY = "provincia"
+TOWN_KEY = "municipio"
+TRANSFER_TYPE_KEY = "tipo_traslado"
+CUM_PASS_RATIO_KEY = "cum_pass_ratio"
+SCHOLARSHIP_KEY = "becario"
+CUM_ABSENT_RATIO_KEY = "cum_absent_ratio"
+CUM_MEDIAN_KEY = "cum_median"
+CUM_PASS_MEDIAN_KEY = "cum_pass_median"
+CUM_FAIL_MEDIAN_KEY = "cum_fail_median"
+STD_DEVIATION_KEY = "std_deviation"
+CUM_MEDIAN_INTERVAL_KEY = "cum_median_interval"
+CUM_MORE_1ST_CALL_RATIO_KEY = "cum_more_1st_call_ratio"
+FINAL_ADMISION_NOTE_KEY = "nota_admision_def"
+FINAL_ADMISION_NOTE_INTERVAL_KEY = "nota_admision_def_interval"
+DROP_OUT_KEY = "abandona"
+FST_MODEL_KEY = "1st_model"
+SND_MODEL_KEY = "2nd_model"
+TRD_MODEL_KEY = "3rd_model"
+FTH_MODEL_KEY = "4th_model"
+FITH_MODEL_KEY = "5th_model"
+SITH_MODEL_KEY = "6th_model"
+SETH_MODEL_KEY = "7th_model"
+ETH_MODEL_KEY = "8th_model"
+NTH_MODEL_KEY = "9th_model"
+TRAIN_KEY = "train"
+DISTANCE_KEY = "distance"
+
+
+
 import argparse
 from apitep_utils import ArgumentParserHelper
 from apitep_utils.feature_engineering import FeatureEngineering
 import logging
 
-import keys
-import numpy as np
 import pandas as pd
 
 import statistics
-import swifter
 import multiprocessing
 
 log = logging.getLogger(__name__)
@@ -25,35 +65,35 @@ def get_distance(city_origin, city_target):
     geolocator = Nominatim(user_agent='edrop_cities')
     location_origin = RateLimiter(geolocator.geocode, min_delay_seconds=1)(city_origin)
     location_target = RateLimiter(geolocator.geocode, min_delay_seconds=1)(city_target)
-    r = requests.get(f"http://router.project-osrm.org/route/v1/car/{location_origin.longitude},"
-                     f"{location_origin.latitude};{location_target.longitude},{location_target.latitude}?overview=false""")
-    routes = json.loads(r.content)
-    if 'España' in str(location_target):
-        distance = routes.get("routes")[0]['distance'] / 1000
-    elif 'MEDELLÍN' in city_target:
-        distance = 114
-    elif 'SANTA MARTA' in city_target:
-        distance = 120
-    elif 'GUADALUPE' in city_target:
-        distance = 152
-    elif 'ATALAYA' in city_target:
-        distance = 97.4
-    elif 'HELECHAL' in city_target:
-        distance = 180
-    elif 'RIO TURBIO' in city_target:
-        distance = 503
-    elif 'VALDIVIA' in city_target:
-        distance = 93
-    elif 'VALVERDE' in city_target:
-        distance = 1892
-    elif 'CARTAGENA' in city_target:
-        distance = 699
-    elif 'GUADALAJARA' in city_target:
-        distance = 358
-    elif 'ENTRERRÍOS' in city_target:
-        distance = 98
-    else:
-        distance = -1
+    distance = -1
+    if location_origin is not None and location_target is not None:
+        r = requests.get(f"http://router.project-osrm.org/route/v1/car/{location_origin.longitude},"
+                         f"{location_origin.latitude};{location_target.longitude},{location_target.latitude}?overview=false""")
+        routes = json.loads(r.content)
+        if 'España' in str(location_target):
+            distance = routes.get("routes")[0]['distance'] / 1000
+        elif 'MEDELLÍN' in city_target:
+            distance = 114
+        elif 'SANTA MARTA' in city_target:
+            distance = 120
+        elif 'GUADALUPE' in city_target:
+            distance = 152
+        elif 'ATALAYA' in city_target:
+            distance = 97.4
+        elif 'HELECHAL' in city_target:
+            distance = 180
+        elif 'RIO TURBIO' in city_target:
+            distance = 503
+        elif 'VALDIVIA' in city_target:
+            distance = 93
+        elif 'VALVERDE' in city_target:
+            distance = 1892
+        elif 'CARTAGENA' in city_target:
+            distance = 699
+        elif 'GUADALAJARA' in city_target:
+            distance = 358
+        elif 'ENTRERRÍOS' in city_target:
+            distance = 98
     return distance
 
 
@@ -127,10 +167,10 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         log.debug("RecordPersonalAccessFeatureEngineering.process()")
         log.info("initial columns are: " + str(self.input_dfs[0].columns))
 
-        analys_columns = [keys.RECORD_KEY, keys.PLAN_CODE_KEY, keys.PLAN_DESCRIPTION_KEY, keys.OPEN_YEAR_PLAN_KEY,
-                          keys.DROP_OUT_KEY, keys.ACCESS_CALL_KEY, keys.ACCESS_DESCRIPTION_KEY,
-                          keys.FINAL_ADMISION_NOTE_KEY, keys.GENDER_KEY, keys.BIRTH_DATE_KEY,
-                          keys.PROVINCE_KEY, keys.TOWN_KEY]
+        analys_columns = [RECORD_KEY, PLAN_CODE_KEY, PLAN_DESCRIPTION_KEY, OPEN_YEAR_PLAN_KEY,
+                          DROP_OUT_KEY, ACCESS_CALL_KEY, ACCESS_DESCRIPTION_KEY,
+                          FINAL_ADMISION_NOTE_KEY, GENDER_KEY, BIRTH_DATE_KEY,
+                          PROVINCE_KEY, TOWN_KEY]
 
         global dset, pr_scholarship_per_year
 
@@ -146,24 +186,11 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         log.info("deleted columns are: " + str(set(cols_before_names) - set(analys_columns)))
 
         null_values_before = self.input_dfs[0].isnull().sum().sum()
-        self.input_dfs[0][keys.FINAL_ADMISION_NOTE_KEY] = self.input_dfs[0].apply(
-            lambda func: get_median(func.cod_plan) if pd.isna(func[keys.FINAL_ADMISION_NOTE_KEY]) else func[
-                keys.FINAL_ADMISION_NOTE_KEY], axis=1)
+        self.input_dfs[0][FINAL_ADMISION_NOTE_KEY] = self.input_dfs[0].apply(
+            lambda func: get_median(func.cod_plan) if pd.isna(func[FINAL_ADMISION_NOTE_KEY]) else func[
+                FINAL_ADMISION_NOTE_KEY], axis=1)
         null_values_after = self.input_dfs[0].isnull().sum().sum()
-        self.changes["resolve null values of " + keys.FINAL_ADMISION_NOTE_KEY] = null_values_before - null_values_after
-
-        # col_list_before = self.input_dfs[0].columns
-        # self.input_dfs[0]['lugar_origen'] = self.input_dfs[0][keys.TOWN_KEY].apply(
-        #     lambda func: 'MISMO_MUNICIPIO' if func == 'CÁCERES' else (func if pd.isna(func) else 'OTRO_MUNICIPIO'))
-        # self.input_dfs[0]['lugar_origen'] = self.input_dfs[0].apply(
-        #     lambda func: func.lugar_origen if func[keys.PROVINCE_KEY] == 'CÁCERES' or
-        #                                       func[keys.PROVINCE_KEY] == 'BADAJOZ' else (
-        #         func[keys.PROVINCE_KEY] if pd.isna(func[keys.PROVINCE_KEY]) else 'OTRA_COMUNIDAD'), axis=1)
-        # self.input_dfs[0].drop([keys.PROVINCE_KEY], axis=1, inplace=True)
-        # col_list_after = self.input_dfs[0].columns
-        # log.info("deleted columns are :" + str(list(set(col_list_before) - set(col_list_after))))
-        # log.info("new column is: lugar_origen")
-        # log.info("final columns are: " + str(analys_columns))
+        self.changes["resolve null values of " + FINAL_ADMISION_NOTE_KEY] = null_values_before - null_values_after
 
         rows_before = len(self.input_dfs[0].index)
         self.input_dfs[0].dropna(inplace=True)
@@ -176,18 +203,18 @@ class RecordPersonalAccessFeatureEngineering(FeatureEngineering):
         self.input_dfs[0]['edad_acceso'] = self.input_dfs[0].apply(
             lambda func: func.fecha_curso.year - func.fecha_nacimiento.year, axis=1)
 
-        self.input_dfs[0].drop([keys.BIRTH_DATE_KEY, 'fecha_curso'], axis=1, inplace=True)
+        self.input_dfs[0].drop([BIRTH_DATE_KEY, 'fecha_curso'], axis=1, inplace=True)
 
         self.input_dfs[0]['distance'] = self.input_dfs[0]['municipio'].swifter.set_npartitions(
             multiprocessing.cpu_count()).apply(lambda func: get_distance('CACERES', func))
-        self.input_dfs[0].drop([keys.TOWN_KEY, keys.PROVINCE_KEY], axis=1, inplace=True)
+        self.input_dfs[0].drop([TOWN_KEY, PROVINCE_KEY], axis=1, inplace=True)
         self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0]['distance'] != -1]
 
-        self.input_dfs[0][keys.DROP_OUT_KEY] = self.input_dfs[0][keys.DROP_OUT_KEY].apply(
+        self.input_dfs[0][DROP_OUT_KEY] = self.input_dfs[0][DROP_OUT_KEY].apply(
             lambda func: 1 if func == 'S' else 0)
-        log.info("Change format to " + keys.DROP_OUT_KEY + " feature")
+        log.info("Change format to " + DROP_OUT_KEY + " feature")
 
-        self.input_dfs[0][keys.SCHOLARSHIP_KEY] = self.input_dfs[0].apply(
+        self.input_dfs[0][SCHOLARSHIP_KEY] = self.input_dfs[0].apply(
             lambda func: get_scholarship(func, course=1), axis=1
         )
 

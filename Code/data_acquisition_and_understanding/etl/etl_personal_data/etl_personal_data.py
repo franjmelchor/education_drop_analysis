@@ -1,12 +1,16 @@
 import logging
 from apitep_utils import ETL
-import keys
+import sys
+import os
+sys.path.append(os.path.relpath('./'))
 import pandas as pd
 from apitep_utils import ArgumentParserHelper
 import argparse
 
 log = logging.getLogger(__name__)
 pr_plan_subj_call: pd.DataFrame
+PLAN_DESCRIPTION_KEY = "des_plan"
+OPEN_YEAR_PLAN_KEY = "anio_apertura_expediente"
 
 
 def delete_people_without_all_information(p):
@@ -79,14 +83,14 @@ class RecordPersonalAccessETL(ETL):
 
         log.info("initial number of rows: " + str(len(self.input_dfs[0].index)))
         rows_before = len(self.input_dfs[0].index)
-        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][keys.PLAN_DESCRIPTION_KEY].isin(old_degrees) == False]
+        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][PLAN_DESCRIPTION_KEY].isin(old_degrees) == False]
         rows_after = len(self.input_dfs[0].index)
         self.changes["delete data of old degrees"] = rows_before - rows_after
 
         rows_before = len(self.input_dfs[0].index)
         df_filter = self.input_dfs[0].apply(delete_people_without_all_information, axis=1)
         self.input_dfs[0] = self.input_dfs[0][df_filter]
-        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][keys.OPEN_YEAR_PLAN_KEY].isin(no_valid_courses)
+        self.input_dfs[0] = self.input_dfs[0][self.input_dfs[0][OPEN_YEAR_PLAN_KEY].isin(no_valid_courses)
                                               == False]
         rows_after = len(self.input_dfs[0].index)
         self.changes["delete data of people without all information"] = rows_before - rows_after

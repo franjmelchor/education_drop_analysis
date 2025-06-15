@@ -1,4 +1,6 @@
 outs:
-- md5: b2d237b00715ff4e952161a0ad0991eb
+- md5: 15d0e8c7fea472fd20a7c735fe7b153e
   size: 46277632
   path: Politecnica -plan asignatura convocatoria.xls
+  isexec: true
+  hash: md5

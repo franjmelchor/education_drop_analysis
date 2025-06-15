@@ -1,4 +1,6 @@
 outs:
-- md5: 4839865c071e239743c8fda0cc750cb8
+- md5: 7b3840c537f7fb65bb38d3a623cf8e5e
   size: 1806336
   path: Politecnica -datos de expediente,personales y de acceso.xls
+  isexec: true
+  hash: md5
